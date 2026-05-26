@@ -334,6 +334,16 @@
   .service-cta-link:hover { gap:20px; }
   .service-cta-link:hover::after { transform:translateX(4px); }
 
+  /* Safety hide for any residual gallery markup on the servicios page */
+  .gallery-strip,
+  .gallery-section,
+  .gallery-masonry,
+  .gallery-grid,
+  .gallery-item,
+  .gallery-strip-item {
+    display: none !important;
+  }
+
   /* PROCESS SECTION */
   .process-section { padding:120px 60px;background:var(--process-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.4s,border-color 0.4s; }
   .process-section::before { content:'PROCESO';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:260px;font-weight:300;color:rgba(212,175,55,0.03);pointer-events:none;white-space:nowrap;line-height:1; }
