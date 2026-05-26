@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contacto &ndash; Epiko Monterrey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root,
+  [data-theme="dark"] {
+    --gold: #d4af37;
+    --gold-light: #f0d060;
+    --gold-dim: #8b7320;
+    --bg: #050505;
+    --bg-soft: #0d0d0d;
+    --bg-card: #111111;
+    --text: #f5f5f5;
+    --text-dim: #a0a0a0;
+    --border: rgba(212,175,55,0.25);
+    --nav-scrolled: rgba(5,5,5,0.95);
+    --hero-filter: brightness(0.28);
+    --overlay-gradient: linear-gradient(to top, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.52) 45%, rgba(5,5,5,0.18) 100%);
+    --toggle-bg: #1a1a1a;
+    --toggle-border: rgba(212,175,55,0.3);
+    --image-border: rgba(212,175,55,0.26);
+    --panel-glow: radial-gradient(circle, rgba(212,175,55,0.10) 0%, transparent 68%);
+  }
+
+  [data-theme="light"] {
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --gold-dim: #8b6914;
+    --bg: #f5efe0;
+    --bg-soft: #ede4d0;
+    --bg-card: #faf4e8;
+    --text: #2a1f0a;
+    --text-dim: #6b5a3a;
+    --border: rgba(184,134,11,0.3);
+    --nav-scrolled: rgba(245,239,224,0.97);
+    --hero-filter: brightness(0.26) saturate(0.82) contrast(1.02);
+    --overlay-gradient: linear-gradient(to top, rgba(32,22,8,0.82) 0%, rgba(32,22,8,0.56) 44%, rgba(32,22,8,0.26) 100%);
+    --toggle-bg: #ede4d0;
+    --toggle-border: rgba(184,134,11,0.4);
+    --image-border: rgba(184,134,11,0.28);
+    --panel-glow: radial-gradient(circle, rgba(184,134,11,0.10) 0%, transparent 68%);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  #preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #preloader.out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .preloader-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: preloaderBrandIn 0.8s ease forwards;
+  }
+  .preloader-logo-mark {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .preloader-logo-bar {
+    height: 3px;
+    background: var(--gold);
+    position: relative;
+  }
+  .preloader-logo-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 6px solid var(--gold);
+  }
+  .preloader-logo-bar.white { background: var(--text); }
+  .preloader-logo-bar.white::after { border-left-color: var(--text); }
+  .preloader-logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .preloader-logo-text strong {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    letter-spacing: 8px;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .preloader-logo-text span {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .preloader-track {
+    width: 170px;
+    height: 1px;
+    background: rgba(212,175,55,0.18);
+    overflow: hidden;
+  }
+  .preloader-fill {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-light));
+    animation: preloaderFill 1.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .preloader-caption {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 4px;
+    color: rgba(212,175,55,0.62);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: preloaderCaptionIn 0.7s ease 0.45s forwards;
+  }
+  @keyframes preloaderBrandIn { to { opacity: 1; transform: translateY(0); } }
+  @keyframes preloaderCaptionIn { to { opacity: 1; } }
+  @keyframes preloaderFill { to { width: 100%; } }
+
+  .cursor {
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.15s ease;
+  }
+  .cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99998;
+    transition: all 0.12s ease;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 10px 10px;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  }
+  .theme-toggle:hover { padding-right: 14px; }
+  .theme-toggle-track {
+    width: 28px;
+    height: 54px;
+    background: var(--toggle-bg);
+    border: 1px solid var(--toggle-border);
+    border-radius: 14px;
+    position: relative;
+    transition: all 0.4s;
+  }
+  .theme-toggle-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  [data-theme="light"] .theme-toggle-thumb { transform: translateY(28px); }
+  .toggle-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    line-height: 1;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: var(--nav-scrolled);
+    backdrop-filter: blur(20px);
+    padding: 16px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .inline-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark { display: flex; flex-direction: column; gap: 5px; }
+  .logo-bar { height: 3px; background: var(--gold); position: relative; }
+  .logo-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 6px solid var(--gold);
+  }
+  .logo-bar.white { background: var(--text); }
+  .logo-bar.white::after { border-left-color: var(--text); }
+  .logo-text-wrap { display: flex; flex-direction: column; }
+  .logo-epiko { font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 5px; color: var(--text); line-height: 1; }
+  .logo-mty { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 4px; color: var(--gold); margin-top: 2px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bg) !important;
+    background: var(--gold);
+    padding: 10px 24px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 1100;
+  }
+  .hamburger span {
+    width: 28px;
+    height: 2px;
+    background: var(--gold);
+    display: block;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1050;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav.open { opacity: 1; pointer-events: all; }
+  .mobile-nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .mobile-nav .nav-cta { font-size: 14px; padding: 14px 40px; }
+
+  .hero-contact {
+    min-height: 86vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 150px 24px 90px;
+  }
+  .hero-contact-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80&fit=crop') center/cover no-repeat;
+    filter: var(--hero-filter);
+  }
+  .hero-contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-gradient);
+  }
+  .hero-contact-content {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 1120px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 36px;
+    align-items: end;
+  }
+  .hero-copy { max-width: 720px; }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(54px, 8vw, 118px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -1.5px;
+    color: var(--text);
+    margin-bottom: 20px;
+    text-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  }
+  .hero-title em { color: var(--gold); font-style: italic; }
+  .hero-subtitle {
+    font-size: clamp(15px, 1.8vw, 18px);
+    line-height: 1.9;
+    color: rgba(245,245,245,0.8);
+    max-width: 620px;
+    text-shadow: 0 4px 18px rgba(0,0,0,0.22);
+  }
+  .hero-quick {
+    border: 1px solid var(--image-border);
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+    padding: 26px;
+  }
+  .quick-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .quick-list {
+    display: grid;
+    gap: 14px;
+  }
+  .quick-item {
+    border-top: 1px solid rgba(212,175,55,0.14);
+    padding-top: 14px;
+  }
+  .quick-item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .quick-item strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .quick-item span, .quick-item a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  [data-theme="light"] .hero-copy {
+    padding: 28px 30px 30px;
+    background: linear-gradient(135deg, rgba(20,14,6,0.50), rgba(20,14,6,0.20));
+    border: 1px solid rgba(212,175,55,0.18);
+    backdrop-filter: blur(7px);
+    box-shadow: 0 22px 56px rgba(20,14,6,0.18);
+  }
+  [data-theme="light"] .hero-title {
+    color: #fbf4e6;
+    text-shadow: 0 10px 34px rgba(0,0,0,0.42);
+  }
+  [data-theme="light"] .hero-subtitle {
+    color: rgba(251,244,230,0.88);
+    text-shadow: 0 6px 22px rgba(0,0,0,0.34);
+  }
+  [data-theme="light"] .hero-eyebrow {
+    color: #e3c267;
+    text-shadow: 0 6px 20px rgba(0,0,0,0.34);
+  }
+  [data-theme="light"] .hero-quick {
+    background: rgba(250,244,232,0.72);
+    border-color: rgba(138,95,16,0.28);
+    box-shadow: 0 18px 44px rgba(138,95,16,0.12);
+  }
+  [data-theme="light"] .quick-item {
+    border-top-color: rgba(138,95,16,0.14);
+  }
+  [data-theme="light"] .quick-item strong {
+    color: #5a400a;
+  }
+  [data-theme="light"] .quick-item span,
+  [data-theme="light"] .quick-item a {
+    color: #4f4128;
+  }
+  [data-theme="light"] nav:not(.scrolled) .logo-epiko {
+    color: #fbf4e6;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  }
+  [data-theme="light"] nav:not(.scrolled) .logo-bar.white {
+    background: #fbf4e6;
+  }
+  [data-theme="light"] nav:not(.scrolled) .logo-bar.white::after {
+    border-left-color: #fbf4e6;
+  }
+  [data-theme="light"] nav:not(.scrolled) .nav-links a {
+    color: rgba(251,244,230,0.72);
+    text-shadow: 0 4px 14px rgba(0,0,0,0.24);
+  }
+  [data-theme="light"] nav:not(.scrolled) .nav-links a:hover,
+  [data-theme="light"] nav:not(.scrolled) .nav-links a.active {
+    color: #f0d38a;
+  }
+
+  .contact-layout {
+    padding: 90px 60px 40px;
+    background: var(--bg);
+  }
+  .contact-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+    gap: 34px;
+    align-items: start;
+  }
+  .contact-panel,
+  .form-panel {
+    position: relative;
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+      var(--bg-card);
+    overflow: hidden;
+  }
+  .contact-panel::before,
+  .form-panel::before {
+    content: '';
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: var(--panel-glow);
+    pointer-events: none;
+  }
+  .contact-panel::before { top: -120px; right: -120px; }
+  .form-panel::before { bottom: -140px; left: -140px; }
+  .contact-panel {
+    padding: 34px;
+    position: sticky;
+    top: 108px;
+  }
+  .panel-label {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .panel-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 3.2vw, 48px);
+    font-weight: 300;
+    line-height: 1.02;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .panel-text {
+    position: relative;
+    z-index: 1;
+    color: var(--text-dim);
+    line-height: 1.9;
+    font-size: 14px;
+    margin-bottom: 26px;
+  }
+  .contact-cards {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .contact-card {
+    border: 1px solid rgba(212,175,55,0.14);
+    padding: 18px 18px 16px;
+    background: rgba(255,255,255,0.02);
+  }
+  .contact-card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .contact-card a,
+  .contact-card span {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .service-mini-list {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .service-mini-list span {
+    border: 1px solid rgba(212,175,55,0.18);
+    padding: 8px 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .form-panel { padding: 38px; }
+  .form-heading {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: end;
+    margin-bottom: 28px;
+  }
+  .form-heading .panel-text { margin-bottom: 0; max-width: 520px; }
+  .response-chip {
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(212,175,55,0.18);
+    padding: 12px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(212,175,55,0.05);
+  }
+  .form-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
+  }
+  .field { display: grid; gap: 10px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2.4px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  input, select, textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(212,175,55,0.18);
+    padding: 16px 18px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    background: rgba(255,255,255,0.02);
+  }
+  textarea { min-height: 150px; resize: vertical; }
+  input::placeholder, textarea::placeholder { color: rgba(160,160,160,0.75); }
+  .service-checks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .service-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(212,175,55,0.14);
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.02);
+  }
+  .service-check input { width: auto; accent-color: var(--gold); }
+  .service-check span {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .form-note {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 420px;
+  }
+  .btn-submit {
+    min-width: 260px;
+    padding: 18px 28px;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .form-success {
+    display: none;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 0 20px;
+  }
+  .form-success h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .form-success p {
+    color: var(--text-dim);
+    line-height: 1.9;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .contact-extras {
+    padding: 30px 60px 100px;
+  }
+  .extras-shell {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .extra-card {
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    padding: 28px 24px;
+  }
+  .extra-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .extra-card p {
+    color: var(--text-dim);
+    line-height: 1.9;
+    font-size: 14px;
+  }
+
+  footer {
+    background: var(--bg-soft);
+    padding: 80px 60px 40px;
+    border-top: 1px solid var(--border);
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--text-dim);
+    margin-top: 24px;
+    max-width: 300px;
+  }
+  .footer-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-bottom p { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
+  .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+  .float-wa {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    width: 58px;
+    height: 58px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 900;
+    box-shadow: 0 0 30px rgba(37,211,102,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+  }
+  .float-wa:hover { transform: scale(1.08); }
+  .float-wa svg { width: 28px; height: 28px; fill: white; }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 1024px) {
+    nav { padding: 20px 40px; }
+    nav.scrolled { padding: 14px 40px; }
+    .hero-contact-content { grid-template-columns: 1fr; }
+    .contact-layout { padding: 70px 40px 30px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-panel { position: relative; top: 0; }
+    .service-checks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .contact-extras { padding: 20px 40px 80px; }
+    .extras-shell { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .theme-toggle { top: auto; bottom: 100px; transform: none; }
+  }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+    .hero-contact { padding: 126px 18px 80px; }
+    .hero-contact-content { gap: 24px; }
+    .hero-quick { padding: 22px; }
+    .contact-layout { padding: 60px 24px 20px; }
+    .form-panel, .contact-panel { padding: 24px 20px; }
+    .form-heading { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .service-checks { grid-template-columns: 1fr; }
+    .form-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .btn-submit { width: 100%; min-width: 0; }
+    .contact-extras { padding: 16px 24px 60px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .theme-toggle {
+      top: auto;
+      bottom: 110px;
+      right: 0;
+      transform: none;
+      border-radius: 10px 0 0 10px;
+      padding: 8px 8px;
+    }
+    .toggle-label { display: none; }
+    .float-wa { width: 50px; height: 50px; bottom: 24px; right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="preloader" aria-hidden="true">
+  <div class="preloader-brand">
+    <div class="preloader-logo-mark">
+      <div class="preloader-logo-bar" style="width:32px"></div>
+      <div class="preloader-logo-bar white" style="width:32px"></div>
+      <div class="preloader-logo-bar" style="width:32px"></div>
+    </div>
+    <div class="preloader-logo-text">
+      <strong>EPIKO</strong>
+      <span>Monterrey</span>
+    </div>
+  </div>
+  <div class="preloader-track"><div class="preloader-fill"></div></div>
+  <div class="preloader-caption">Cargando experiencia</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="theme-toggle" id="themeToggle" title="Cambiar tema" role="button" aria-label="Cambiar entre tema claro y oscuro" tabindex="0">
+  <div class="toggle-label">Tema</div>
+  <div class="theme-toggle-track">
+    <div class="theme-toggle-thumb" id="toggleThumb">
+      <span id="toggleIcon">&#9790;</span>
+    </div>
+  </div>
+</div>
+
+<a href="https://wa.me/521XXXXXXXXXX" class="float-wa" target="_blank" title="Cont&aacute;ctanos por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo inline-logo">
+    <div class="logo-mark">
+      <div class="logo-bar" style="width:28px"></div>
+      <div class="logo-bar white" style="width:28px"></div>
+      <div class="logo-bar" style="width:28px"></div>
+    </div>
+    <div class="logo-text-wrap">
+      <span class="logo-epiko">EPIKO</span>
+      <span class="logo-mty">MONTERREY</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="index.html#galeria">Galer&iacute;a</a></li>
+    <li><a href="index.html#nosotros">Nosotros</a></li>
+    <li><a href="contacto.html" class="active">Contacto</a></li>
+    <li><a href="contacto.html" class="nav-cta">Cotizar</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Abrir men&uacute;">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Inicio</a>
+  <a href="servicios.html" onclick="closeMobileNav()">Servicios</a>
+  <a href="index.html#galeria" onclick="closeMobileNav()">Galer&iacute;a</a>
+  <a href="index.html#nosotros" onclick="closeMobileNav()">Nosotros</a>
+  <a href="contacto.html" onclick="closeMobileNav()">Contacto</a>
+  <a href="contacto.html" class="nav-cta" onclick="closeMobileNav()">Cotizar</a>
+</div>
+
+<section class="hero-contact">
+  <div class="hero-contact-bg"></div>
+  <div class="hero-contact-content">
+    <div class="hero-copy reveal">
+      <p class="hero-eyebrow">Contacto Epiko Monterrey</p>
+      <h1 class="hero-title">Hablemos de tu <em>evento</em></h1>
+      <p class="hero-subtitle">Cu&eacute;ntanos fecha, tipo de celebraci&oacute;n y servicios que necesitas. Te ayudamos a aterrizar una propuesta clara, elegante y lista para ejecutarse sin complicaciones.</p>
+    </div>
+    <div class="hero-quick reveal">
+      <div class="quick-label">Respuesta r&aacute;pida</div>
+      <div class="quick-list">
+        <div class="quick-item">
+          <strong>WhatsApp</strong>
+          <a href="https://wa.me/521XXXXXXXXXX" target="_blank">+52 81 XXXX XXXX</a>
+        </div>
+        <div class="quick-item">
+          <strong>Email</strong>
+          <a href="mailto:ventas@epikomty.com">ventas@epikomty.com</a>
+        </div>
+        <div class="quick-item">
+          <strong>Cobertura</strong>
+          <span>Monterrey, San Pedro, Guadalupe, Apodaca y &aacute;rea metropolitana</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-layout">
+  <div class="contact-grid">
+    <aside class="contact-panel reveal">
+      <p class="panel-label">Atenci&oacute;n personalizada</p>
+      <h2 class="panel-title">Te orientamos desde el primer mensaje</h2>
+      <p class="panel-text">Ya sea una boda, una pi&ntilde;ata, una primera comuni&oacute;n o un evento corporativo, podemos ayudarte a definir qu&eacute; necesitas y c&oacute;mo armarlo con mejor presencia y funcionalidad.</p>
+
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card-title">WhatsApp directo</div>
+          <a href="https://wa.me/521XXXXXXXXXX" target="_blank">+52 81 XXXX XXXX</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-title">Correo</div>
+          <a href="mailto:ventas@epikomty.com">ventas@epikomty.com</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-title">Horario de respuesta</div>
+          <span>Lunes a s&aacute;bado, atenci&oacute;n &aacute;gil durante el d&iacute;a</span>
+        </div>
+      </div>
+
+      <div class="service-mini-list">
+        <span>Mobiliario</span>
+        <span>Toldos</span>
+        <span>Inflables</span>
+        <span>Banquetes</span>
+        <span>Portacoolers</span>
+        <span>Lounge</span>
+      </div>
+    </aside>
+
+    <div class="form-panel reveal">
+      <div class="form-heading">
+        <div>
+          <p class="panel-label">Solicitud de cotizaci&oacute;n</p>
+          <h2 class="panel-title">Comp&aacute;rtenos los detalles y armamos tu propuesta</h2>
+          <p class="panel-text">Mientras m&aacute;s contexto nos des, m&aacute;s precisa y &uacute;til ser&aacute; la recomendaci&oacute;n para tu evento.</p>
+        </div>
+        <div class="response-chip">Cotizaci&oacute;n sin compromiso</div>
+      </div>
+
+      <div id="formContent">
+        <div class="form-grid">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" placeholder="Ej. Mariana Garza" required/>
+          </div>
+          <div class="field">
+            <label for="telefono">Tel&eacute;fono</label>
+            <input id="telefono" type="tel" placeholder="81..." required/>
+          </div>
+
+          <div class="field">
+            <label for="correo">Correo electr&oacute;nico</label>
+            <input id="correo" type="email" placeholder="tu@email.com"/>
+          </div>
+          <div class="field">
+            <label for="fecha">Fecha del evento</label>
+            <input id="fecha" type="date"/>
+          </div>
+
+          <div class="field">
+            <label for="tipo-evento">Tipo de evento</label>
+            <select id="tipo-evento">
+              <option value="">Selecciona una opci&oacute;n</option>
+              <option>Boda</option>
+              <option>XV A&ntilde;os</option>
+              <option>Primera comuni&oacute;n</option>
+              <option>Fiesta infantil</option>
+              <option>Evento corporativo</option>
+              <option>Cumplea&ntilde;os / social</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ubicacion">Ubicaci&oacute;n</label>
+            <input id="ubicacion" type="text" placeholder="Ej. San Pedro / Monterrey"/>
+          </div>
+
+          <div class="field full">
+            <label>Servicios de inter&eacute;s</label>
+            <div class="service-checks">
+              <label class="service-check"><input type="checkbox"/><span>Mobiliario</span></label>
+              <label class="service-check"><input type="checkbox"/><span>Inflables</span></label>
+              <label class="service-check"><input type="checkbox"/><span>Toldos & Carpas</span></label>
+              <label class="service-check"><input type="checkbox"/><span>Banquetes</span></label>
+              <label class="service-check"><input type="checkbox"/><span>Portacoolers</span></label>
+              <label class="service-check"><input type="checkbox"/><span>Lounge</span></label>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="mensaje">Cu&eacute;ntanos m&aacute;s</label>
+            <textarea id="mensaje" placeholder="N&uacute;mero aproximado de invitados, estilo del evento, horario, montaje o cualquier detalle que nos ayude a cotizar mejor."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <p class="form-note">Si prefieres una respuesta m&aacute;s inmediata, tambi&eacute;n puedes escribirnos directo por WhatsApp con estos mismos datos.</p>
+            <button class="btn-submit" type="button" onclick="handleSubmit()">Enviar solicitud</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <h3>&iexcl;Gracias!</h3>
+        <p>Recibimos tu solicitud. Muy pronto te compartimos una propuesta o nos ponemos en contacto para afinar detalles de tu evento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-extras">
+  <div class="extras-shell">
+    <article class="extra-card reveal">
+      <h3>Qu&eacute; nos ayuda a cotizar mejor</h3>
+      <p>La fecha, la colonia o municipio, el n&uacute;mero estimado de invitados y los servicios que te interesan son los datos m&aacute;s &uacute;tiles para darte una propuesta m&aacute;s precisa.</p>
+    </article>
+    <article class="extra-card reveal">
+      <h3>Eventos que atendemos</h3>
+      <p>Bodas, primeras comuniones, bautizos, XV a&ntilde;os, fiestas infantiles, reuniones familiares, activaciones de marca y eventos corporativos en Monterrey y alrededores.</p>
+    </article>
+    <article class="extra-card reveal">
+      <h3>Nuestro enfoque</h3>
+      <p>Buscamos que el montaje se vea bien, funcione bien y llegue a tiempo. M&aacute;s que rentar equipo, ayudamos a resolver tu evento con orden y presentaci&oacute;n.</p>
+    </article>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="inline-logo">
+        <div class="logo-mark">
+          <div class="logo-bar" style="width:28px"></div>
+          <div class="logo-bar white" style="width:28px"></div>
+          <div class="logo-bar" style="width:28px"></div>
+        </div>
+        <div class="logo-text-wrap">
+          <span class="logo-epiko">EPIKO</span>
+          <span class="logo-mty">MONTERREY</span>
+        </div>
+      </div>
+      <p>Empresa orgullosamente regiomontana especializada en renta de mobiliario y equipo para eventos de todo tipo en Monterrey y su &aacute;rea metropolitana.</p>
+    </div>
+    <div class="footer-col">
+      <h4>P&aacute;ginas</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="index.html#galeria">Galer&iacute;a</a></li>
+        <li><a href="index.html#nosotros">Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="servicios.html">Mobiliario</a></li>
+        <li><a href="servicios.html">Inflables</a></li>
+        <li><a href="servicios.html">Portacoolers</a></li>
+        <li><a href="servicios.html">Banquetes</a></li>
+        <li><a href="servicios.html">Toldos</a></li>
+        <li><a href="servicios.html">Lounge</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="mailto:ventas@epikomty.com">ventas@epikomty.com</a></li>
+        <li><a href="#">Monterrey, N.L.</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Epiko Monterrey. Todos los derechos reservados.</p>
+    <p>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener noreferrer">Partum Design</a></p>
+  </div>
+</footer>
+
+<script>
+const preloaderStart = performance.now();
+
+const html = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const toggleIcon = document.getElementById('toggleIcon');
+const savedTheme = localStorage.getItem('epiko-theme') || 'dark';
+html.setAttribute('data-theme', savedTheme);
+toggleIcon.textContent = savedTheme === 'dark' ? '\u263D' : '\u2600';
+toggle.addEventListener('click', () => {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  toggleIcon.textContent = next === 'dark' ? '\u263D' : '\u2600';
+  localStorage.setItem('epiko-theme', next);
+});
+toggle.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    toggle.click();
+  }
+});
+
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+if (cursor && ring && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, input, select, textarea, .service-check, .theme-toggle').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2.5)';
+      ring.style.transform = 'scale(1.4)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+}
+
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function handleSubmit() {
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 1000);
+}
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const elapsed = performance.now() - preloaderStart;
+  const delay = Math.max(0, 1450 - elapsed);
+  setTimeout(() => {
+    preloader.classList.add('out');
+  }, delay);
+});
+</script>
+
+</body>
+</html>

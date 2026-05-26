@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Servicios – Epiko Monterrey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* ===== TEMA OSCURO ===== */
+  :root,
+  [data-theme="dark"] {
+    --gold: #d4af37;
+    --gold-light: #f0d060;
+    --gold-dim: #8b7320;
+    --bg: #050505;
+    --bg-soft: #0d0d0d;
+    --bg-card: #111111;
+    --text: #f5f5f5;
+    --text-dim: #a0a0a0;
+    --border: rgba(212,175,55,0.25);
+    --nav-bg: rgba(5,5,5,0.95);
+    --hero-img-filter: brightness(0.22) saturate(0.7);
+    --service-img-filter: brightness(0.75) saturate(0.75);
+    --service-img-hover: brightness(0.6) saturate(0.6);
+    --gallery-strip-filter: brightness(0.6) saturate(0.65);
+    --gallery-strip-hover: brightness(0.45) saturate(0.5);
+    --hero-overlay: linear-gradient(to top, rgba(5,5,5,0.7) 0%, transparent 50%);
+    --gallery-label-bg: linear-gradient(to top, rgba(5,5,5,0.8), transparent);
+    --service-info-bg: #111111;
+    --intro-strip-bg: #0d0d0d;
+    --process-bg: #0d0d0d;
+    --cta-bg: #0d0d0d;
+    --footer-bg: #0d0d0d;
+    --step-number-bg: #0d0d0d;
+    --intro-stat-bg: #111111;
+    --cta-quote-color: rgba(212,175,55,0.02);
+  }
+
+  /* ===== TEMA CLARO ===== */
+  [data-theme="light"] {
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --gold-dim: #8b6914;
+    --bg: #f5efe0;
+    --bg-soft: #ede4d0;
+    --bg-card: #faf4e8;
+    --text: #2a1f0a;
+    --text-dim: #6b5a3a;
+    --border: rgba(184,134,11,0.3);
+    --nav-bg: rgba(245,239,224,0.97);
+    --hero-img-filter: brightness(0.30) saturate(0.7);
+    --service-img-filter: brightness(0.8) saturate(0.8);
+    --service-img-hover: brightness(0.65) saturate(0.65);
+    --gallery-strip-filter: brightness(0.7) saturate(0.7);
+    --gallery-strip-hover: brightness(0.55) saturate(0.55);
+    --hero-overlay: linear-gradient(to top, rgba(245,239,224,0.65) 0%, transparent 50%);
+    --gallery-label-bg: linear-gradient(to top, rgba(245,239,224,0.85), transparent);
+    --service-info-bg: #faf4e8;
+    --intro-strip-bg: #ede4d0;
+    --process-bg: #ede4d0;
+    --cta-bg: #ede4d0;
+    --footer-bg: #ede4d0;
+    --step-number-bg: #ede4d0;
+    --intro-stat-bg: #faf4e8;
+    --cta-quote-color: rgba(184,134,11,0.04);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  #preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #preloader.out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .preloader-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: preloaderBrandIn 0.8s ease forwards;
+  }
+  .preloader-logo-mark {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .preloader-logo-bar {
+    height: 3px;
+    background: var(--gold);
+    position: relative;
+  }
+  .preloader-logo-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 6px solid var(--gold);
+  }
+  .preloader-logo-bar.white { background: var(--text); }
+  .preloader-logo-bar.white::after { border-left-color: var(--text); }
+  .preloader-logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .preloader-logo-text strong {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    letter-spacing: 8px;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .preloader-logo-text span {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .preloader-track {
+    width: 170px;
+    height: 1px;
+    background: rgba(212,175,55,0.18);
+    overflow: hidden;
+  }
+  .preloader-fill {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-light));
+    animation: preloaderFill 1.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .preloader-caption {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 4px;
+    color: rgba(212,175,55,0.62);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: preloaderCaptionIn 0.7s ease 0.45s forwards;
+  }
+  @keyframes preloaderBrandIn { to { opacity: 1; transform: translateY(0); } }
+  @keyframes preloaderCaptionIn { to { opacity: 1; } }
+  @keyframes preloaderFill { to { width: 100%; } }
+
+  /* CURSOR */
+  .cursor { width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transition:transform 0.15s ease;box-shadow:0 0 0 1px rgba(5,5,5,0.35),0 0 12px rgba(212,175,55,0.45); }
+  .cursor-ring { width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transition:all 0.12s ease; }
+
+  /* GRAIN */
+  body::before { content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.3; }
+
+  /* ===== THEME TOGGLE ===== */
+  .theme-toggle {
+    position: fixed; top: 50%; right: 0;
+    transform: translateY(-50%);
+    z-index: 9000;
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--bg-card); border: 1px solid var(--border); border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 10px 10px; gap: 6px; cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  }
+  .theme-toggle:hover { padding-right: 14px; box-shadow: -6px 0 30px rgba(212,175,55,0.2); }
+  .theme-toggle-track { width:28px;height:54px;background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;position:relative;transition:all 0.4s; }
+  .theme-toggle-thumb { width:22px;height:22px;border-radius:50%;background:var(--gold);position:absolute;left:2px;top:2px;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);display:flex;align-items:center;justify-content:center;font-size:12px; }
+  [data-theme="light"] .theme-toggle-thumb { transform: translateY(28px); }
+  .toggle-label { font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);line-height:1; }
+
+  /* NAV */
+  nav { position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:all 0.4s ease; }
+  nav.scrolled { background:var(--nav-bg);backdrop-filter:blur(20px);padding:14px 48px;border-bottom:1px solid var(--border); }
+  .nav-logo { flex-shrink:0; position:relative; z-index:1; }
+  .nav-links { display:flex;flex:1;justify-content:center;gap:clamp(12px,1.3vw,24px);list-style:none;align-items:center;min-width:0; }
+  .nav-links li { flex-shrink:0; }
+  .nav-links a { font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.4px;color:var(--text-dim);text-decoration:none;text-transform:uppercase;transition:color 0.3s;white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+  .nav-cta { font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--bg) !important;background:var(--gold);padding:10px 18px;text-decoration:none;transition:all 0.3s; }
+  .nav-cta:hover { background:var(--gold-light) !important;color:var(--bg) !important; }
+
+  /* HAMBURGER */
+  .hamburger { display:none;flex-direction:column;gap:6px;cursor:pointer;padding:4px;background:none;border:none;z-index:1100; }
+  .hamburger span { width:28px;height:2px;background:var(--gold);display:block;transition:all 0.3s ease;transform-origin:center; }
+  .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,6px);}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+  .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px);}
+
+  /* MOBILE NAV */
+  .mobile-nav { display:none;position:fixed;inset:0;background:var(--bg);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:36px;opacity:0;pointer-events:none;transition:opacity 0.3s ease; }
+  .mobile-nav.open { opacity:1;pointer-events:all; }
+  .mobile-nav a { font-family:'Cinzel',serif;font-size:22px;letter-spacing:4px;color:var(--text-dim);text-decoration:none;text-transform:uppercase;transition:color 0.3s; }
+  .mobile-nav a:hover { color:var(--gold); }
+  .mobile-nav .nav-cta { font-size:14px;padding:14px 40px;margin-top:10px; }
+
+  /* LOGO */
+  .inline-logo { display:inline-flex;align-items:center;gap:10px;text-decoration:none; }
+  .logo-mark { display:flex;flex-direction:column;gap:5px; }
+  .logo-bar { height:3px;background:var(--gold);position:relative; }
+  .logo-bar::after { content:'';position:absolute;right:-6px;top:0;border-top:3px solid transparent;border-bottom:3px solid transparent;border-left:6px solid var(--gold); }
+  .logo-bar.white { background:var(--text); }
+  .logo-bar.white::after { border-left-color:var(--text); }
+  .logo-text-wrap { display:flex;flex-direction:column; }
+  .logo-epiko { font-family:'Cinzel',serif;font-size:22px;letter-spacing:5px;color:var(--text);line-height:1;transition:color 0.4s; }
+  .logo-mty { font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--gold);margin-top:2px; }
+
+  /* HERO SLIDER */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+    padding: 182px 24px 48px;
+  }
+  .hero-slides { position:absolute;inset:0; }
+  .hero-slide { position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease; }
+  .hero-slide.active { opacity:1; }
+  .hero-slide img { width:100%;height:100%;object-fit:cover;filter:var(--hero-img-filter);transform:scale(1.05);transition:transform 8s ease, filter 0.5s ease; }
+  .hero-slide.active img { transform:scale(1); }
+  .hero-slide::after { content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 85%, rgba(212,175,55,0.10) 0%, transparent 60%), var(--hero-overlay); }
+  .hero-counter { position:absolute;right:60px;bottom:60px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:16px; }
+  .hero-counter-num { font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold);letter-spacing:2px; }
+  .hero-counter-dots { display:flex;flex-direction:column;gap:8px; }
+  .hero-dot { width:2px;height:20px;background:rgba(212,175,55,0.3);transition:background 0.4s, height 0.4s;cursor:pointer; }
+  .hero-dot.active { background:var(--gold);height:36px; }
+  .hero-progress { position:absolute;bottom:0;left:0;height:2px;background:var(--gold);z-index:5;animation:progressBar 5s linear infinite; }
+  @keyframes progressBar { from{width:0%} to{width:100%} }
+  .hero-slide-label { position:absolute;top:50%;right:80px;transform:translateY(-50%);z-index:5;writing-mode:vertical-rl;font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:rgba(212,175,55,0.5);text-transform:uppercase;transition:color 0.4s; }
+  .hero-particles { position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2; }
+  .particle { position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;animation:float linear infinite;opacity:0; }
+  @keyframes float { 0%{transform:translateY(100vh) rotate(0deg);opacity:0;} 10%{opacity:0.6;} 90%{opacity:0.6;} 100%{transform:translateY(-100px) rotate(720deg);opacity:0;} }
+  .hero-content { position:relative;z-index:4;text-align:center;max-width:960px;padding:12px 40px 0; }
+  .hero-eyebrow { font-family:'Cinzel',serif;font-size:11px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:28px;opacity:0;animation:fadeUp 1s 0.3s ease forwards; }
+  .hero-title { font-family:'Cormorant Garamond',serif;font-size:clamp(64px,10vw,130px);font-weight:300;line-height:0.95;letter-spacing:-2px;color:#f5f5f5;margin-bottom:24px;opacity:0;animation:fadeUp 1s 0.5s ease forwards; }
+  .hero-title span { color:var(--gold);font-style:italic; }
+  .hero-subtitle { font-size:13px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:rgba(245,245,245,0.7);margin-bottom:52px;opacity:0;animation:fadeUp 1s 0.7s ease forwards;font-family:'Montserrat',sans-serif; }
+  .hero-buttons { display:flex;gap:20px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 0.9s ease forwards; }
+  .hero-scroll { position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:4;opacity:0;animation:fadeUp 1s 1.2s ease forwards; }
+  .hero-scroll span { font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:rgba(245,245,245,0.7);text-transform:uppercase; }
+  .scroll-line { width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(1);} 50%{opacity:1;transform:scaleY(1.2);} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+
+  /* BUTTONS */
+  .btn-primary { font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;background:var(--gold);color:var(--bg);padding:18px 48px;text-decoration:none;transition:all 0.3s ease;position:relative;overflow:hidden; }
+  .btn-primary::after { content:'';position:absolute;inset:0;background:var(--gold-light);transform:translateX(-100%);transition:transform 0.3s ease; }
+  .btn-primary:hover::after { transform:translateX(0); }
+  .btn-primary span { position:relative;z-index:1;color:var(--bg); }
+  .btn-secondary { font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;border:1px solid var(--border);color:var(--text);padding:18px 48px;text-decoration:none;transition:all 0.3s ease; }
+  .btn-secondary:hover { border-color:var(--gold);color:var(--gold); }
+
+  /* DIVIDER */
+  .divider { display:flex;align-items:center;gap:20px;justify-content:center;padding:20px 0; }
+  .divider-line { height:1px;flex:1;max-width:200px;background:linear-gradient(to right,transparent,var(--gold)); }
+  .divider-line.right { background:linear-gradient(to left,transparent,var(--gold)); }
+  .divider-diamond { width:8px;height:8px;background:var(--gold);transform:rotate(45deg); }
+
+  /* SECTION LABELS */
+  .section-label { font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:16px; }
+  .section-title { font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,72px);font-weight:300;line-height:1.1;text-align:center;color:var(--text);margin-bottom:20px;transition:color 0.4s; }
+  .section-title em { color:var(--gold);font-style:italic; }
+  .section-desc { font-size:14px;font-weight:300;line-height:1.9;color:var(--text-dim);text-align:center;max-width:620px;margin:0 auto 60px;transition:color 0.4s; }
+
+  /* REVEAL */
+  .reveal { opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease; }
+  .reveal.visible { opacity:1;transform:translateY(0); }
+
+  /* INTRO STRIP */
+  .intro-strip { padding:80px 60px;background:var(--intro-strip-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.4s,border-color 0.4s; }
+  .intro-inner { max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+  .intro-text .section-title,.intro-text .section-label { text-align:left; }
+  .intro-text p { font-size:14px;line-height:2;color:var(--text-dim);margin-bottom:20px;transition:color 0.4s; }
+  .intro-stats { display:grid;grid-template-columns:1fr 1fr;gap:2px; }
+  .intro-stat { background:var(--bg-card);border:1px solid var(--border);padding:36px 28px;text-align:center;transition:border-color 0.3s, background 0.4s; }
+  .intro-stat:hover { border-color:var(--gold); }
+  .intro-stat-num { font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:var(--gold);line-height:1;display:block; }
+  .intro-stat-label { font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;margin-top:10px;display:block;transition:color 0.4s; }
+
+  /* SERVICES CATALOG */
+  .services-catalog { padding:120px 60px;background:var(--bg);transition:background 0.4s; }
+  .catalog-header { margin-bottom:100px;text-align:center; }
+  .service-block { max-width:1300px;margin:0 auto 120px;display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;position:relative; }
+  .service-block:last-child { margin-bottom:0; }
+  .service-block.reverse { direction:rtl; }
+  .service-block.reverse > * { direction:ltr; }
+  .service-visual { position:relative;overflow:hidden;aspect-ratio:4/3;min-height:480px; }
+  .service-visual img { width:100%;height:100%;object-fit:cover;filter:var(--service-img-filter);transition:transform 0.8s ease,filter 0.6s ease; }
+  .service-block:hover .service-visual img { transform:scale(1.05);filter:var(--service-img-hover); }
+  .service-visual-overlay { position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,175,55,0.12) 0%,transparent 60%);pointer-events:none; }
+  .service-visual-num { position:absolute;top:36px;left:36px;font-family:'Cormorant Garamond',serif;font-size:100px;font-weight:300;color:rgba(212,175,55,0.15);line-height:1;pointer-events:none;transition:color 0.4s; }
+  .service-block:hover .service-visual-num { color:rgba(212,175,55,0.25); }
+  .service-tag { position:absolute;bottom:0;left:0;background:var(--gold);color:var(--bg);font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:10px 20px; }
+  .service-info { background:var(--bg-card);border:1px solid var(--border);padding:64px 60px;display:flex;flex-direction:column;justify-content:center;transition:border-color 0.4s,background 0.4s;position:relative;overflow:hidden; }
+  .service-block:hover .service-info { border-color:var(--gold); }
+  .service-info::before { content:'';position:absolute;top:0;left:0;width:3px;height:0%;background:var(--gold);transition:height 0.6s ease; }
+  .service-block:hover .service-info::before { height:100%; }
+  .service-cat { font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px; }
+  .service-cat::after { content:'';flex:1;height:1px;background:var(--border);max-width:60px; }
+  .service-info h2 { font-family:'Cormorant Garamond',serif;font-size:clamp(36px,3.5vw,52px);font-weight:300;line-height:1.1;color:var(--text);margin-bottom:24px;transition:color 0.4s; }
+  .service-info h2 em { color:var(--gold);font-style:italic; }
+  .service-info p { font-size:14px;line-height:2;color:var(--text-dim);margin-bottom:32px;transition:color 0.4s; }
+  .service-features { list-style:none;margin-bottom:44px; }
+  .service-features li { font-size:13px;color:var(--text-dim);padding:10px 0;border-bottom:1px solid rgba(212,175,55,0.1);display:flex;align-items:center;gap:12px;transition:color 0.3s; }
+  .service-features li:last-child { border-bottom:none; }
+  .service-features li:hover { color:var(--text); }
+  .service-features li::before { content:'◈';color:var(--gold);font-size:10px;flex-shrink:0; }
+  .service-cta-link { font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:12px;transition:gap 0.3s; }
+  .service-cta-link::after { content:'→';transition:transform 0.3s; }
+  .service-cta-link:hover { gap:20px; }
+  .service-cta-link:hover::after { transform:translateX(4px); }
+
+  /* GALLERY STRIP */
+  .gallery-strip { padding:0 0 120px;overflow:hidden;background:var(--bg);transition:background 0.4s; }
+  .gallery-strip-inner { display:grid;grid-template-columns:repeat(6,1fr);gap:4px;height:320px; }
+  .gallery-strip-item { overflow:hidden;position:relative;cursor:pointer; }
+  .gallery-strip-item:nth-child(1) { grid-column:span 2; }
+  .gallery-strip-item:nth-child(4) { grid-column:span 2; }
+  .gallery-strip-item img { width:100%;height:100%;object-fit:cover;filter:var(--gallery-strip-filter);transition:transform 0.6s ease,filter 0.4s ease; }
+  .gallery-strip-item:hover img { transform:scale(1.08);filter:var(--gallery-strip-hover); }
+  .gallery-strip-item-label { position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(5,5,5,0.8),transparent);opacity:0;transition:opacity 0.4s; }
+  .gallery-strip-item:hover .gallery-strip-item-label { opacity:1; }
+  .gallery-strip-item-label span { font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase; }
+
+  /* PROCESS SECTION */
+  .process-section { padding:120px 60px;background:var(--process-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background 0.4s,border-color 0.4s; }
+  .process-section::before { content:'PROCESO';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:260px;font-weight:300;color:rgba(212,175,55,0.03);pointer-events:none;white-space:nowrap;line-height:1; }
+  .process-header { margin-bottom:80px; }
+  .process-steps { max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;position:relative; }
+  .process-steps::before { content:'';position:absolute;top:28px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:1px;background:var(--border); }
+  .process-step { text-align:center;position:relative; }
+  .process-step-num { font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:3px;color:var(--gold);display:block;margin-bottom:16px; }
+  .process-step-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(212,175,55,0.28);
+    border-radius: 50%;
+    background: rgba(212,175,55,0.05);
+    color: var(--gold);
+    font-size: 24px;
+    line-height: 1;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  .process-step:hover .process-step-icon {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.09);
+  }
+  .process-step h3 { font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin-bottom:12px;transition:color 0.4s; }
+  .process-step p { font-size:13px;color:var(--text-dim);line-height:1.8;transition:color 0.4s; }
+  .process-connector { position:absolute;top:28px;right:-50%;width:100%;height:1px;background:var(--border); }
+
+  /* CTA BAND */
+  .cta-band { padding:120px 60px;background:var(--cta-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;position:relative;overflow:hidden;transition:background 0.4s,border-color 0.4s; }
+  .cta-band::before { content:'"';position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);font-family:'Cormorant Garamond',serif;font-size:500px;color:rgba(212,175,55,0.02);pointer-events:none;line-height:1; }
+  .cta-band h2 { font-family:'Cormorant Garamond',serif;font-size:clamp(48px,6vw,88px);font-weight:300;color:var(--text);margin-bottom:20px;line-height:1.1;position:relative;transition:color 0.4s; }
+  .cta-band h2 em { color:var(--gold);font-style:italic; }
+  .cta-band p { font-size:14px;color:var(--text-dim);letter-spacing:2px;margin-bottom:48px;text-transform:uppercase;font-family:'Cinzel',serif;position:relative;transition:color 0.4s; }
+  .cta-buttons { display:flex;gap:20px;justify-content:center;flex-wrap:wrap;position:relative; }
+
+  /* FOOTER */
+  footer { background:var(--footer-bg);padding:80px 60px 40px;border-top:1px solid var(--border);transition:background 0.4s,border-color 0.4s; }
+  .footer-grid { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;padding-bottom:60px;border-bottom:1px solid var(--border);transition:border-color 0.4s; }
+  .footer-brand p { font-size:13px;line-height:1.9;color:var(--text-dim);margin-top:24px;max-width:280px;transition:color 0.4s; }
+  .footer-col h4 { font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:24px; }
+  .footer-col ul { list-style:none; }
+  .footer-col li { margin-bottom:12px; }
+  .footer-col a { font-size:13px;color:var(--text-dim);text-decoration:none;transition:color 0.3s; }
+  .footer-col a:hover { color:var(--gold); }
+  .footer-bottom { max-width:1200px;margin:0 auto;padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; }
+  .footer-bottom p { font-size:11px;color:var(--text-dim);letter-spacing:1px;transition:color 0.4s; }
+  .footer-bottom a { color:var(--gold);text-decoration:none; }
+
+  /* FLOAT WA */
+  .float-wa { position:fixed;bottom:36px;right:36px;width:58px;height:58px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:900;box-shadow:0 0 30px rgba(37,211,102,0.4);transition:transform 0.3s,box-shadow 0.3s;text-decoration:none; }
+  .float-wa:hover { transform:scale(1.1);box-shadow:0 0 50px rgba(37,211,102,0.6); }
+  .float-wa svg { width:28px;height:28px;fill:white; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1360px) {
+    nav { padding:20px 36px; gap:18px; }
+    nav.scrolled { padding:14px 36px; }
+    .nav-links { gap:18px; }
+    .nav-links a { font-size:10px; letter-spacing:2px; }
+    .nav-cta { padding:10px 18px; font-size:10px; letter-spacing:2px; }
+    .hero-content { padding-top:130px; }
+  }
+  @media (max-width: 1024px) {
+    nav { padding:18px 28px; }
+    nav.scrolled { padding:13px 28px; }
+    .hero { padding-top: 184px; }
+    .hero-content { padding-top:12px; }
+    .service-block { grid-template-columns:1fr; }
+    .service-block.reverse { direction:ltr; }
+    .service-visual { min-height:320px;aspect-ratio:16/9; }
+    .intro-inner { grid-template-columns:1fr;gap:48px; }
+    .intro-stats { grid-template-columns:repeat(2,1fr); }
+    .process-steps { grid-template-columns:1fr 1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr;gap:40px; }
+    .gallery-strip-inner { grid-template-columns:repeat(3,1fr);height:240px; }
+    .gallery-strip-item:nth-child(1),.gallery-strip-item:nth-child(4) { grid-column:span 1; }
+    .theme-toggle { top:auto;bottom:100px;transform:none; }
+  }
+  @media (max-width: 768px) {
+    body { cursor:auto; }
+    .cursor,.cursor-ring { display:none; }
+    nav { padding:16px 20px; }
+    nav.scrolled { padding:12px 20px; }
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .mobile-nav { display:flex; }
+    .hero { padding: 132px 20px 40px; }
+    .hero-content { padding:18px 20px 0; }
+    .hero-title { font-size:clamp(52px,13vw,80px); }
+    .hero-buttons { flex-direction:column;align-items:center;gap:14px; }
+    .btn-primary,.btn-secondary { padding:16px 36px;width:100%;max-width:280px;text-align:center; }
+    .services-catalog { padding:80px 20px; }
+    .service-info { padding:44px 24px; }
+    .intro-strip { padding:60px 20px; }
+    .process-section { padding:80px 20px; }
+    .process-steps { grid-template-columns:1fr; }
+    .process-steps::before { display:none; }
+    .cta-band { padding:80px 20px; }
+    footer { padding:60px 20px 32px; }
+    .footer-grid { grid-template-columns:1fr;gap:32px; }
+    .footer-bottom { flex-direction:column;text-align:center; }
+    .hero-counter { display:none; }
+    .gallery-strip-inner { grid-template-columns:1fr 1fr;height:200px; }
+    .theme-toggle { top:auto;bottom:110px;right:0;transform:none;border-radius:10px 0 0 10px;padding:8px 8px; }
+    .toggle-label { display:none; }
+    .float-wa { width:50px;height:50px;bottom:24px;right:24px; }
+  }
+  @media (max-width: 480px) {
+    .intro-stats { grid-template-columns:1fr 1fr; }
+    .gallery-strip-inner { grid-template-columns:1fr;height:auto; }
+    .gallery-strip-item { height:180px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="preloader" aria-hidden="true">
+  <div class="preloader-brand">
+    <div class="preloader-logo-mark">
+      <div class="preloader-logo-bar" style="width:32px"></div>
+      <div class="preloader-logo-bar white" style="width:32px"></div>
+      <div class="preloader-logo-bar" style="width:32px"></div>
+    </div>
+    <div class="preloader-logo-text">
+      <strong>EPIKO</strong>
+      <span>Monterrey</span>
+    </div>
+  </div>
+  <div class="preloader-track"><div class="preloader-fill"></div></div>
+  <div class="preloader-caption">Cargando experiencia</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle" id="themeToggle" title="Cambiar tema" role="button" aria-label="Cambiar tema" tabindex="0">
+  <div class="toggle-label">Tema</div>
+  <div class="theme-toggle-track">
+    <div class="theme-toggle-thumb" id="toggleThumb"><span id="toggleIcon">☽</span></div>
+  </div>
+</div>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/521XXXXXXXXXX" class="float-wa" target="_blank" title="Contáctanos por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo inline-logo">
+    <div class="logo-mark">
+      <div class="logo-bar" style="width:28px"></div>
+      <div class="logo-bar white" style="width:28px"></div>
+      <div class="logo-bar" style="width:28px"></div>
+    </div>
+    <div class="logo-text-wrap">
+      <span class="logo-epiko">EPIKO</span>
+      <span class="logo-mty">MONTERREY</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="servicios.html" class="active">Servicios</a></li>
+    <li><a href="index.html#galeria">Galería</a></li>
+    <li><a href="index.html#nosotros">Nosotros</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="contacto.html" class="nav-cta">Cotizar</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Inicio</a>
+  <a href="servicios.html" onclick="closeMobileNav()">Servicios</a>
+  <a href="index.html#galeria" onclick="closeMobileNav()">Galería</a>
+  <a href="index.html#nosotros" onclick="closeMobileNav()">Nosotros</a>
+  <a href="contacto.html" onclick="closeMobileNav()">Contacto</a>
+  <a href="contacto.html" class="nav-cta" onclick="closeMobileNav()">Cotizar</a>
+</div>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" data-label="Mobiliario">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1920&q=80&fit=crop" alt="Mobiliario Elegante"/>
+      <div class="service-visual-overlay"></div>
+    </div>
+    <div class="hero-slide" data-label="Inflables">
+      <img src="https://images.unsplash.com/photo-1765947389722-2e96d8c0aad9?auto=format&fit=crop&fm=jpg&q=80&w=1920" alt="Inflables y Diversión"/>
+      <div class="service-visual-overlay"></div>
+    </div>
+    <div class="hero-slide" data-label="Toldos">
+      <img src="9452.jpg" alt="Toldos y Carpas"/>
+      <div class="service-visual-overlay"></div>
+    </div>
+    <div class="hero-slide" data-label="Banquetes">
+      <img src="1810.jpg" alt="Banquetes y Catering"/>
+      <div class="service-visual-overlay"></div>
+    </div>
+    <div class="hero-slide" data-label="Lounge">
+      <img src="3597.jpg" alt="Mobiliario Lounge"/>
+      <div class="service-visual-overlay"></div>
+    </div>
+    <div class="hero-slide" data-label="Portacoolers">
+      <img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1920&q=80&fit=crop" alt="Portacoolers"/>
+      <div class="service-visual-overlay"></div>
+    </div>
+  </div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-counter">
+    <span class="hero-counter-num" id="slideCounterNum">01 / 06</span>
+    <div class="hero-counter-dots" id="slideDots"></div>
+  </div>
+  <div class="hero-slide-label" id="slideLabel">Mobiliario</div>
+  <div class="hero-progress" id="heroProgress"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Catálogo de Servicios · Epiko Monterrey</p>
+    <h1 class="hero-title">Nuestros<br><span>Servicios</span></h1>
+    <p class="hero-subtitle">Mobiliario · Inflables · Toldos · Banquetes · Portacoolers · Lounge</p>
+    <div class="hero-buttons">
+      <a href="#catalogo" class="btn-primary"><span>Explorar catálogo</span></a>
+      <a href="#contacto" class="btn-secondary">Cotizar ahora</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Descubrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<section class="intro-strip reveal">
+  <div class="intro-inner">
+    <div class="intro-text">
+      <p class="section-label">Por qué elegirnos</p>
+      <h2 class="section-title" style="text-align:left;font-size:clamp(36px,3.5vw,56px)">Solución <em>integral</em><br>para tu evento</h2>
+      <p>En Epiko Monterrey ofrecemos una experiencia completa: desde el primer contacto hasta la última silla recogida. Cada servicio está diseñado para complementar al otro, así tu evento luce perfecto de principio a fin.</p>
+      <p>Contamos con flota propia de transporte, equipo certificado y un equipo humano que ama lo que hace.</p>
+    </div>
+    <div class="intro-stats">
+      <div class="intro-stat"><span class="intro-stat-num" data-count="500">0</span><span class="intro-stat-label">Eventos realizados</span></div>
+      <div class="intro-stat"><span class="intro-stat-num" data-count="6">0</span><span class="intro-stat-label">Servicios disponibles</span></div>
+      <div class="intro-stat"><span class="intro-stat-num" data-count="100">0</span><span class="intro-stat-label">% Satisfacción</span></div>
+      <div class="intro-stat"><span class="intro-stat-num" data-count="7">0</span><span class="intro-stat-label">Días disponibles</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line right"></div></div>
+
+<!-- SERVICES CATALOG -->
+<section class="services-catalog" id="catalogo">
+  <div class="catalog-header reveal">
+    <p class="section-label">Catálogo completo</p>
+    <h2 class="section-title">Todo lo que tu <em>evento necesita</em></h2>
+    <p class="section-desc">Descubre cada uno de nuestros servicios, diseñados para que tu celebración sea perfecta desde el primer detalle hasta el último.</p>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-visual">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=900&q=80&fit=crop" alt="Mobiliario para Eventos"/>
+      <div class="service-visual-overlay"></div>
+      <span class="service-visual-num">01</span>
+      <div class="service-tag">Mobiliario</div>
+    </div>
+    <div class="service-info">
+      <span class="service-cat">Servicio 01</span>
+      <h2>Mobiliario para <em>Eventos</em></h2>
+      <p>Transformamos cualquier espacio con nuestro catálogo de mobiliario de vanguardia. Desde bodas íntimas hasta grandes celebraciones corporativas, tenemos la pieza perfecta para cada estilo y concepto.</p>
+      <ul class="service-features">
+        <li>Sillas Tiffany doradas y plateadas</li>
+        <li>Sillas Crossback y Phoenix</li>
+        <li>Mesas redondas, rectangulares y cuadradas</li>
+        <li>Mesas de madera rústica y banqueteras</li>
+        <li>Entrega, montaje y recolección incluidos</li>
+        <li>Disponibles en toda el AMM</li>
+      </ul>
+      <a href="#contacto" class="service-cta-link">Solicitar cotización</a>
+    </div>
+  </div>
+
+  <div class="service-block reverse reveal">
+    <div class="service-visual">
+      <img src="https://images.unsplash.com/photo-1765947389722-2e96d8c0aad9?auto=format&fit=crop&fm=jpg&q=80&w=900" alt="Inflables y Diversión"/>
+      <div class="service-visual-overlay"></div>
+      <span class="service-visual-num">02</span>
+      <div class="service-tag">Inflables</div>
+    </div>
+    <div class="service-info">
+      <span class="service-cat">Servicio 02</span>
+      <h2>Inflables &amp; <em>Diversión</em></h2>
+      <p>Los héroes de cada fiesta infantil. Nuestros inflables son sanitizados antes de cada evento y cumplen con todos los estándares de seguridad para que los pequeños se diviertan sin preocupaciones.</p>
+      <ul class="service-features">
+        <li>Castillos temáticos (princesas, superhéroes, animales)</li>
+        <li>Castillos brincolines para distintas edades</li>
+        <li>Juegos inflables interactivos</li>
+        <li>Sanitización certificada antes de cada uso</li>
+        <li>Ideal para piñatas, fiestas y comuniones</li>
+      </ul>
+      <a href="#contacto" class="service-cta-link">Solicitar cotización</a>
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-visual">
+      <img src="9452.jpg" alt="Toldos y Carpas"/>
+      <div class="service-visual-overlay"></div>
+      <span class="service-visual-num">03</span>
+      <div class="service-tag">Toldos &amp; Carpas</div>
+    </div>
+    <div class="service-info">
+      <span class="service-cat">Servicio 03</span>
+      <h2>Toldos &amp; <em>Carpas</em></h2>
+      <p>El calor de Monterrey no tiene por qué arruinar tu celebración. Nuestros toldos y carpas garantizan la comodidad de tus invitados en cualquier condición climática, con una instalación rápida y segura.</p>
+      <ul class="service-features">
+        <li>Toldos y carpas en varias medidas</li>
+        <li>Toldos extensibles para terrazas</li>
+        <li>Carpas tipo carpa árabe y glamping</li>
+        <li>Instalación supervisada por técnicos certificados</li>
+        <li>Resistentes a viento y lluvia</li>
+        <li>Múltiples colores disponibles</li>
+      </ul>
+      <a href="#contacto" class="service-cta-link">Solicitar cotización</a>
+    </div>
+  </div>
+
+  <div class="service-block reverse reveal">
+    <div class="service-visual">
+      <img src="1810.jpg" alt="Banquetes y Catering"/>
+      <div class="service-visual-overlay"></div>
+      <span class="service-visual-num">04</span>
+      <div class="service-tag">Banquetes</div>
+    </div>
+    <div class="service-info">
+      <span class="service-cat">Servicio 04</span>
+      <h2>Banquetes &amp; <em>Catering</em></h2>
+      <p>El sabor es parte del recuerdo. Ofrecemos opciones gastronómicas para todos los gustos y presupuestos, desde una deliciosa taquiza hasta una cena formal de varios tiempos digna de cualquier celebración.</p>
+      <ul class="service-features">
+        <li>Taquizas de guisados, arrachera y pastor</li>
+        <li>Parrilladas y asados completos</li>
+        <li>Cenas formales de 3 a 5 tiempos</li>
+        <li>Menús infantiles personalizados</li>
+        <li>Servicio de meseros y barman</li>
+        <li>Cristalería y mantelería incluidas</li>
+      </ul>
+      <a href="#contacto" class="service-cta-link">Solicitar cotización</a>
+    </div>
+  </div>
+
+  <div class="service-block reveal">
+    <div class="service-visual">
+      <img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=900&q=80&fit=crop" alt="Portacoolers"/>
+      <div class="service-visual-overlay"></div>
+      <span class="service-visual-num">05</span>
+      <div class="service-tag">Portacoolers</div>
+    </div>
+    <div class="service-info">
+      <span class="service-cat">Servicio 05</span>
+      <h2><em>Portacoolers</em> de alta potencia</h2>
+      <p>Quienes vivimos en Monterrey sabemos que el calor puede ser el enemigo número uno de cualquier evento al aire libre. Nuestros portacoolers de alta capacidad mantienen frescos a todos tus invitados.</p>
+      <ul class="service-features">
+        <li>Ideal para espacios abiertos y semiabiertos</li>
+        <li>Instalación rápida (menos de 30 min)</li>
+        <li>Consumo energético optimizado</li>
+      </ul>
+      <a href="#contacto" class="service-cta-link">Solicitar cotización</a>
+    </div>
+  </div>
+
+  <div class="service-block reverse reveal">
+    <div class="service-visual">
+      <img src="3597.jpg" alt="Mobiliario Lounge"/>
+      <div class="service-visual-overlay"></div>
+      <span class="service-visual-num">06</span>
+      <div class="service-tag">Lounge</div>
+    </div>
+    <div class="service-info">
+      <span class="service-cat">Servicio 06</span>
+      <h2>Mobiliario <em>Lounge</em></h2>
+      <p>Crea zonas de convivencia únicas y relajadas con nuestro mobiliario lounge. Perfecto para complementar cualquier evento con un toque moderno, ya sea en adultos o en la zona infantil de tu celebración.</p>
+      <ul class="service-features">
+        <li>Salas lounge modernas en blanco y negro</li>
+        <li>Periqueras y mesas altas</li>
+        <li>Pufs y cojines decorativos</li>
+        <li>Combinaciones personalizadas por evento</li>
+      </ul>
+      <a href="#contacto" class="service-cta-link">Solicitar cotización</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <div class="gallery-strip-inner reveal">
+    <div class="gallery-strip-item"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80&fit=crop" alt="Boda"/><div class="gallery-strip-item-label"><span>Boda Elegante</span></div></div>
+    <div class="gallery-strip-item"><img src="16740.jpg" alt="XV Años"/><div class="gallery-strip-item-label"><span>XV Años</span></div></div>
+    <div class="gallery-strip-item"><img src="2149377997.jpg" alt="Comunión"/><div class="gallery-strip-item-label"><span>Comunión</span></div></div>
+    <div class="gallery-strip-item"><img src="1810.jpg" alt="Banquete"/><div class="gallery-strip-item-label"><span>Banquete Premium</span></div></div>
+    <div class="gallery-strip-item"><img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80&fit=crop" alt="Corporativo"/><div class="gallery-strip-item-label"><span>Corporativo</span></div></div>
+    <div class="gallery-strip-item"><img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80&fit=crop" alt="Fiesta"/><div class="gallery-strip-item-label"><span>Fiesta Infantil</span></div></div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-header reveal">
+    <p class="section-label">Cómo trabajamos</p>
+    <h2 class="section-title">Tu evento, <em>sin complicaciones</em></h2>
+    <p class="section-desc">Hemos simplificado cada paso del proceso para que tú solo te preocupes por disfrutar. Nosotros nos encargamos del resto.</p>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step"><span class="process-step-num">01</span><span class="process-step-icon">&#9990;</span><h3>Contacto</h3><p>Escríbenos por WhatsApp o correo. Cuéntanos tu evento, fecha y los servicios que necesitas. Respondemos en menos de 2 horas.</p><div class="process-connector"></div></div>
+    <div class="process-step"><span class="process-step-num">02</span><span class="process-step-icon">&#9998;</span><h3>Cotización</h3><p>Te enviamos una propuesta personalizada con precios claros y sin letras chiquitas. Sin compromiso y totalmente gratis.</p><div class="process-connector"></div></div>
+    <div class="process-step"><span class="process-step-num">03</span><span class="process-step-icon">&#10003;</span><h3>Confirmación</h3><p>Apruebas la cotización y apartamos tu fecha. Coordinamos logística, tiempos y todo lo que necesites para el gran día.</p><div class="process-connector"></div></div>
+    <div class="process-step"><span class="process-step-num">04</span><span class="process-step-icon">&#10022;</span><h3>Tu Evento</h3><p>Llegamos puntual, instalamos, supervisamos y al final recogemos todo. Tú solo disfruta y crea recuerdos épicos.</p></div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band" id="contacto">
+  <div class="reveal">
+    <h2>¿Listo para tu <em>próximo evento?</em></h2>
+    <p>Escríbenos y cotiza sin compromiso</p>
+    <div class="cta-buttons">
+      <a href="mailto:ventas@epikomty.com" class="btn-primary"><span>ventas@epikomty.com</span></a>
+      <a href="https://wa.me/521XXXXXXXXXX" class="btn-secondary" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="inline-logo">
+        <div class="logo-mark"><div class="logo-bar" style="width:24px"></div><div class="logo-bar white" style="width:24px"></div><div class="logo-bar" style="width:24px"></div></div>
+        <div class="logo-text-wrap"><span class="logo-epiko">EPIKO</span><span class="logo-mty">MONTERREY</span></div>
+      </div>
+      <p>Empresa orgullosamente regiomontana especializada en renta de mobiliario y equipo para eventos de todo tipo en Monterrey y su área metropolitana.</p>
+    </div>
+    <div class="footer-col"><h4>Páginas</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="index.html#galeria">Galería</a></li><li><a href="index.html#nosotros">Nosotros</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+    <div class="footer-col"><h4>Servicios</h4><ul><li><a href="servicios.html">Mobiliario</a></li><li><a href="servicios.html">Inflables</a></li><li><a href="servicios.html">Portacoolers</a></li><li><a href="servicios.html">Banquetes</a></li><li><a href="servicios.html">Toldos</a></li><li><a href="servicios.html">Lounge</a></li></ul></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="mailto:ventas@epikomty.com">ventas@epikomty.com</a></li><li><a href="#">Monterrey, N.L.</a></li><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Epiko Monterrey. Todos los derechos reservados.</p>
+    <p>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener noreferrer">Partum Design</a></p>
+  </div>
+</footer>
+
+<script>
+const preloaderStart = performance.now();
+
+// THEME TOGGLE
+const html = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const toggleIcon = document.getElementById('toggleIcon');
+const savedTheme = localStorage.getItem('epiko-theme') || 'dark';
+html.setAttribute('data-theme', savedTheme);
+toggleIcon.textContent = savedTheme === 'dark' ? '☽' : '☀';
+toggle.addEventListener('click', () => {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  toggleIcon.textContent = next === 'dark' ? '☽' : '☀';
+  localStorage.setItem('epiko-theme', next);
+});
+toggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle.click();} });
+
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+if (cursor && ring) {
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  function animateCursor() { cursor.style.left=mx-5+'px'; cursor.style.top=my-5+'px'; rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx-18+'px'; ring.style.top=ry-18+'px'; requestAnimationFrame(animateCursor); }
+  animateCursor();
+  document.querySelectorAll('a, button, .service-block, .gallery-strip-item, .process-step, .intro-stat, .theme-toggle').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform='scale(2.5)'; ring.style.transform='scale(1.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform='scale(1)'; ring.style.transform='scale(1)'; });
+  });
+}
+
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+function closeMobileNav() { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); document.body.style.overflow = ''; }
+
+// PARTICLES
+const pContainer = document.getElementById('particles');
+for (let i=0;i<28;i++) { const p=document.createElement('div'); p.className='particle'; p.style.cssText=`left:${Math.random()*100}%;width:${Math.random()*3+1}px;height:${Math.random()*3+1}px;animation-duration:${Math.random()*15+10}s;animation-delay:${Math.random()*10}s;`; pContainer.appendChild(p); }
+
+// NAV SCROLL
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold:0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// HERO SLIDER
+const slides = document.querySelectorAll('.hero-slide');
+const dotsContainer = document.getElementById('slideDots');
+const counterNum = document.getElementById('slideCounterNum');
+const slideLabel = document.getElementById('slideLabel');
+const progressBar = document.getElementById('heroProgress');
+let current = 0;
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'hero-dot' + (i===0?' active':'');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+function goToSlide(index) {
+  slides[current].classList.remove('active');
+  dotsContainer.children[current].classList.remove('active');
+  current = index;
+  slides[current].classList.add('active');
+  dotsContainer.children[current].classList.add('active');
+  counterNum.textContent = String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+  slideLabel.textContent = slides[current].dataset.label||'';
+  resetProgress();
+}
+function nextSlide() { goToSlide((current+1)%slides.length); }
+function resetProgress() {
+  progressBar.style.animation='none'; progressBar.offsetHeight;
+  progressBar.style.animation='progressBar 5s linear forwards';
+  clearTimeout(window._slideTimer);
+  window._slideTimer = setTimeout(nextSlide, 5000);
+}
+slideLabel.textContent = slides[0].dataset.label||'';
+resetProgress();
+
+// COUNT UP
+const countEls = document.querySelectorAll('[data-count]');
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target; const target = +el.dataset.count;
+      const suffix = target===100?'%':target===7?'/7':'+';
+      let start = 0;
+      const step = ts => { if(!start)start=ts; const p=Math.min((ts-start)/2000,1); const ease=1-Math.pow(1-p,3); el.textContent=Math.floor(ease*target)+(p===1?suffix:''); if(p<1)requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold:0.5 });
+countEls.forEach(el => countObserver.observe(el));
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const elapsed = performance.now() - preloaderStart;
+  const delay = Math.max(0, 1450 - elapsed);
+  setTimeout(() => {
+    preloader.classList.add('out');
+  }, delay);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2476 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Epiko Monterrey &ndash; Todo para tu Evento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* ===== TEMA OSCURO (default) ===== */
+  :root,
+  [data-theme="dark"] {
+    --gold: #d4af37;
+    --gold-light: #f0d060;
+    --gold-dim: #8b7320;
+    --bg: #050505;
+    --bg-soft: #0d0d0d;
+    --bg-card: #111111;
+    --text: #f5f5f5;
+    --text-dim: #a0a0a0;
+    --border: rgba(212,175,55,0.25);
+    --nav-scrolled: rgba(5,5,5,0.95);
+    --hero-filter: brightness(0.25);
+    --overlay-gradient: linear-gradient(to top, rgba(5,5,5,0.9) 0%, transparent 60%);
+    --gallery-label-gradient: linear-gradient(to top, rgba(5,5,5,0.85), transparent);
+    --cta-band-bg: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(212,175,55,0.1) 0%, transparent 70%), #0d0d0d;
+    --stats-bg: #0d0d0d;
+    --gallery-bg: #0d0d0d;
+    --footer-bg: #0d0d0d;
+    --testimonial-card-bg: #111111;
+    --testimonial-quote-opacity: 0.04;
+    --logo-bar-accent: var(--text);
+    --about-image-filter: brightness(0.85) saturate(0.8);
+    --service-img-filter: brightness(0.5) saturate(0.6);
+    --service-img-hover: brightness(0.35) saturate(0.4);
+    --gallery-img-filter: brightness(0.8) saturate(0.75);
+    --gallery-img-hover: brightness(0.6) saturate(0.5);
+    --value-hover-bg: rgba(212,175,55,0.05);
+    --toggle-bg: #1a1a1a;
+    --toggle-border: rgba(212,175,55,0.3);
+    --toggle-icon-dark: '☽';
+    --toggle-icon-light: '☀';
+    --section-title-color: var(--text);
+    --image-text: #f5f5f5;
+    --image-text-dim: rgba(245,245,245,0.78);
+    --image-border: rgba(212,175,55,0.28);
+  }
+
+  /* ===== TEMA CLARO ===== */
+  [data-theme="light"] {
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --gold-dim: #8b6914;
+    --bg: #f5efe0;
+    --bg-soft: #ede4d0;
+    --bg-card: #faf4e8;
+    --text: #2a1f0a;
+    --text-dim: #6b5a3a;
+    --border: rgba(184,134,11,0.3);
+    --nav-scrolled: rgba(245,239,224,0.97);
+    --hero-filter: brightness(0.35);
+    --overlay-gradient: linear-gradient(to top, rgba(245,239,224,0.85) 0%, transparent 60%);
+    --gallery-label-gradient: linear-gradient(to top, rgba(245,239,224,0.9), transparent);
+    --cta-band-bg: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(184,134,11,0.12) 0%, transparent 70%), #ede4d0;
+    --stats-bg: #ede4d0;
+    --gallery-bg: #ede4d0;
+    --footer-bg: #ede4d0;
+    --testimonial-card-bg: #faf4e8;
+    --testimonial-quote-opacity: 0.08;
+    --logo-bar-accent: var(--text);
+    --about-image-filter: brightness(0.9) saturate(0.9);
+    --service-img-filter: brightness(0.65) saturate(0.7);
+    --service-img-hover: brightness(0.45) saturate(0.5);
+    --gallery-img-filter: brightness(0.85) saturate(0.8);
+    --gallery-img-hover: brightness(0.65) saturate(0.6);
+    --value-hover-bg: rgba(184,134,11,0.08);
+    --toggle-bg: #ede4d0;
+    --toggle-border: rgba(184,134,11,0.4);
+    --section-title-color: var(--text);
+    --image-text: #f8f4ea;
+    --image-text-dim: rgba(248,244,234,0.84);
+    --image-border: rgba(240,220,170,0.38);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  #preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #preloader.out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .preloader-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: preloaderBrandIn 0.8s ease forwards;
+  }
+  .preloader-logo-mark {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .preloader-logo-bar {
+    height: 3px;
+    background: var(--gold);
+    position: relative;
+  }
+  .preloader-logo-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 6px solid var(--gold);
+  }
+  .preloader-logo-bar.white { background: var(--text); }
+  .preloader-logo-bar.white::after { border-left-color: var(--text); }
+  .preloader-logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .preloader-logo-text strong {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    letter-spacing: 8px;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .preloader-logo-text span {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .preloader-track {
+    width: 170px;
+    height: 1px;
+    background: rgba(212,175,55,0.18);
+    overflow: hidden;
+  }
+  .preloader-fill {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-light));
+    animation: preloaderFill 1.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .preloader-caption {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 4px;
+    color: rgba(212,175,55,0.62);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: preloaderCaptionIn 0.7s ease 0.45s forwards;
+  }
+  @keyframes preloaderBrandIn { to { opacity: 1; transform: translateY(0); } }
+  @keyframes preloaderCaptionIn { to { opacity: 1; } }
+  @keyframes preloaderFill { to { width: 100%; } }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.15s ease;
+    box-shadow: 0 0 0 1px rgba(5,5,5,0.35), 0 0 12px rgba(212,175,55,0.45);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99998;
+    transition: all 0.12s ease;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  /* ===== THEME TOGGLE BUTTON ===== */
+  .theme-toggle {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 10px 10px;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  }
+  .theme-toggle:hover {
+    padding-right: 14px;
+    box-shadow: -6px 0 30px rgba(212,175,55,0.2);
+  }
+  .theme-toggle-track {
+    width: 28px;
+    height: 54px;
+    background: var(--toggle-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    position: relative;
+    transition: all 0.4s ease;
+  }
+  .theme-toggle-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  [data-theme="light"] .theme-toggle-thumb {
+    transform: translateY(28px);
+  }
+  .toggle-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    line-height: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: var(--nav-scrolled);
+    backdrop-filter: blur(20px);
+    padding: 16px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo svg { height: 38px; width: auto; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active, .nav-links a.nav-active { color: var(--gold); }
+  .nav-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bg) !important;
+    background: var(--gold);
+    padding: 10px 24px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--bg) !important; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 1100;
+  }
+  .hamburger span {
+    width: 28px;
+    height: 2px;
+    background: var(--gold);
+    display: block;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+  /* MOBILE NAV OVERLAY */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1050;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-nav.open { opacity: 1; pointer-events: all; }
+  .mobile-nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav .nav-cta {
+    font-size: 14px;
+    padding: 14px 40px;
+    margin-top: 10px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 128px 24px 96px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 80%, rgba(212,175,55,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(212,175,55,0.05) 0%, transparent 50%),
+      url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80&fit=crop') center/cover no-repeat;
+    filter: var(--hero-filter);
+    transition: filter 0.5s ease;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    filter: var(--hero-filter);
+    transition: filter 0.5s ease, transform 0.8s ease;
+    transform: scale(1.04);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(5,5,5,0.2) 0%, rgba(5,5,5,0.62) 48%, rgba(5,5,5,0.9) 100%),
+      radial-gradient(circle at top center, rgba(212,175,55,0.2) 0%, transparent 34%);
+    z-index: 1;
+  }
+  .hero-glow {
+    position: absolute;
+    inset: auto 50% 8%;
+    width: min(76vw, 960px);
+    height: 280px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.04) 42%, transparent 72%);
+    filter: blur(18px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-particles { position: absolute; inset: 0; overflow: hidden; }
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+  }
+  @keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 1120px);
+    display: grid;
+    justify-items: center;
+    gap: 22px;
+    text-align: center;
+    padding: clamp(28px, 4vw, 44px);
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s ease forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(58px, 9vw, 122px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -1.5px;
+    color: #f5f5f5;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s ease forwards;
+  }
+  .hero-title-line,
+  .hero-title-accent {
+    display: block;
+  }
+  .hero-title-accent {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .hero-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    max-width: 760px;
+    font-size: clamp(15px, 2vw, 19px);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.08em;
+    color: var(--image-text-dim);
+    opacity: 0;
+    animation: fadeUp 1s 0.7s ease forwards;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 860px;
+    opacity: 0;
+    animation: fadeUp 1s 0.82s ease forwards;
+  }
+  .hero-tag {
+    padding: 10px 16px;
+    border: 1px solid var(--image-border);
+    background: rgba(255,255,255,0.04);
+    color: var(--image-text-dim);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+  }
+  .hero-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 280px));
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s ease forwards;
+  }
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--bg);
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    isolation: isolate;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-light);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary span {
+    position: relative;
+    z-index: 1;
+    color: var(--bg);
+    display: inline-block;
+    width: 100%;
+  }
+  .btn-secondary {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: 1px solid var(--image-border);
+    color: var(--image-text);
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.03);
+  }
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(212,175,55,0.08);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s ease forwards;
+  }
+  .hero-scroll span {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--image-text-dim);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      display: none;
+    }
+    .particle,
+    .hero-eyebrow,
+    .hero-title,
+    .hero-subtitle,
+    .hero-tags,
+    .hero-buttons,
+    .hero-scroll {
+      animation: none !important;
+      opacity: 1;
+    }
+  }
+
+  /* GOLD DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .divider-line { height: 1px; flex: 1; max-width: 200px; background: linear-gradient(to right, transparent, var(--gold)); }
+  .divider-line.right { background: linear-gradient(to left, transparent, var(--gold)); }
+  .divider-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+
+  /* SECTION TITLES */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--section-title-color);
+    margin-bottom: 20px;
+    transition: color 0.4s;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .section-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text-dim);
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 60px;
+  }
+
+  /* QUIENES SOMOS */
+  .about { padding: 120px 60px; position: relative; background: var(--bg); transition: background 0.4s; }
+  .about::before,
+  .services-preview::before,
+  .gallery-section::before,
+  .testimonials::after {
+    content: '';
+    position: absolute;
+    inset: auto;
+    width: min(42vw, 520px);
+    height: min(42vw, 520px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 34%, transparent 70%);
+    filter: blur(12px);
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .about::before {
+    top: 4%;
+    right: -10%;
+  }
+  .about-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-image-wrap { position: relative; }
+  .about-image-wrap::before {
+    content: '';
+    position: absolute;
+    top: -20px; left: -20px;
+    right: 20px; bottom: 20px;
+    border: 1px solid var(--border);
+    z-index: 0;
+    transition: border-color 0.4s;
+  }
+  .about-image-wrap::after {
+    content: '"Transformamos espacios, creamos memorias"';
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    background: var(--gold);
+    color: var(--bg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    letter-spacing: 1px;
+    padding: 12px 20px;
+    z-index: 3;
+    transition: background 0.4s, color 0.4s;
+  }
+  .about-image {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    filter: var(--about-image-filter);
+    display: block;
+    transition: filter 0.4s;
+  }
+  .about-text { padding-left: 20px; }
+  .about-text .section-label, .about-text .section-title { text-align: left; }
+  .about-text p {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    transition: color 0.4s;
+  }
+
+  .identity-section {
+    padding: 20px 60px 110px;
+    position: relative;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(212,175,55,0.08), transparent 28%),
+      radial-gradient(circle at 85% 82%, rgba(212,175,55,0.06), transparent 24%),
+      var(--bg);
+    transition: background 0.4s;
+  }
+  .identity-shell {
+    max-width: 1240px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+      var(--bg-soft);
+    padding: 46px;
+    position: relative;
+    overflow: hidden;
+  }
+  .identity-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(212,175,55,0.16) 0%, transparent 70%);
+    transform: translate(-35%, -35%);
+    pointer-events: none;
+  }
+  .identity-header {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 28px;
+    align-items: end;
+    margin-bottom: 34px;
+  }
+  .identity-header .section-label,
+  .identity-header .section-title,
+  .identity-header .section-desc {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .identity-header .section-desc {
+    margin-bottom: 0;
+    max-width: 420px;
+  }
+  .identity-badge {
+    justify-self: end;
+    align-self: start;
+    border: 1px solid rgba(212,175,55,0.24);
+    background: rgba(212,175,55,0.08);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 14px 18px;
+  }
+  .identity-top-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+  }
+  .identity-card {
+    position: relative;
+    min-height: 280px;
+    padding: 34px 34px 30px;
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)),
+      linear-gradient(135deg, rgba(212,175,55,0.06), transparent 42%),
+      rgba(255,255,255,0.01);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    overflow: hidden;
+  }
+  .identity-card::after {
+    content: '';
+    position: absolute;
+    left: 34px;
+    right: 34px;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent 72%);
+    opacity: 0.7;
+  }
+  .identity-card::before {
+    content: attr(data-mark);
+    position: absolute;
+    right: 24px;
+    top: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    line-height: 1;
+    color: rgba(212,175,55,0.10);
+  }
+  .identity-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 22px 44px rgba(0,0,0,0.18);
+  }
+  .identity-card-label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .identity-card-label::after {
+    content: '';
+    width: 42px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.45;
+  }
+  .identity-card h3 {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 3.6vw, 50px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 0.98;
+    margin-bottom: 18px;
+    max-width: 340px;
+  }
+  .identity-card p {
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-dim);
+    max-width: 470px;
+    margin-bottom: 24px;
+  }
+  .identity-card-meta {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: rgba(245,245,245,0.62);
+  }
+  .identity-card-meta::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: rgba(212,175,55,0.4);
+  }
+  .identity-values-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .value-card {
+    position: relative;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    padding: 24px 22px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    overflow: hidden;
+  }
+  .value-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(212,175,55,0.08), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .value-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    background: var(--value-hover-bg);
+  }
+  .value-card:hover::before { opacity: 1; }
+  .value-card-icon {
+    position: relative;
+    z-index: 1;
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(212,175,55,0.28);
+    border-radius: 50%;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+  .value-card-name {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .value-card-desc {
+    position: relative;
+    z-index: 1;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+
+  /* STATS */
+  .stats {
+    padding: 44px 60px 34px;
+    background: linear-gradient(180deg, rgba(212,175,55,0.05), transparent 68%);
+    border-top: 1px solid rgba(212,175,55,0.12);
+    border-bottom: 1px solid rgba(212,175,55,0.08);
+    transition: background 0.4s, border-color 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .stats::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(212,175,55,0.12) 0%, transparent 32%);
+    pointer-events: none;
+  }
+  .stats-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .stat-item {
+    text-align: center;
+    position: relative;
+    padding: 22px 18px 18px;
+    border: none;
+    background: transparent;
+    overflow: hidden;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+  }
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    top: 22%;
+    right: 0;
+    width: 1px;
+    height: 56%;
+    background: linear-gradient(to bottom, transparent, rgba(212,175,55,0.24), transparent);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .stat-item:last-child::before { display: none; }
+  .stat-item:hover {
+    transform: translateY(-4px);
+  }
+  .stat-item:hover::before { opacity: 1; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(58px, 5vw, 76px);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 22px rgba(212,175,55,0.08);
+    transform-origin: center;
+  }
+  .stat-number.is-counting {
+    animation: statPulse 0.7s ease;
+  }
+  .stat-item.counted {
+    opacity: 1;
+  }
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-top: 10px;
+    transition: color 0.4s;
+  }
+  @keyframes statPulse {
+    0% { transform: scale(0.92); opacity: 0.45; }
+    55% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* SERVICIOS PREVIEW */
+  .services-preview {
+    padding: 120px 60px;
+    position: relative;
+    background: var(--bg);
+    transition: background 0.4s;
+  }
+  .services-preview::before {
+    top: 14%;
+    left: -12%;
+  }
+  .services-header { margin-bottom: 80px; }
+  .services-grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute;
+    inset: -20% auto -20% -120%;
+    width: 55%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transform: skewX(-18deg);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+  }
+  .service-card:hover::after {
+    transform: translateX(420%) skewX(-18deg);
+  }
+  .service-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease, filter 0.5s ease;
+    filter: var(--service-img-filter);
+  }
+  .service-card:hover img { transform: scale(1.08); filter: var(--service-img-hover); }
+  .service-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-gradient);
+    transition: opacity 0.5s, background 0.4s;
+  }
+  .service-card-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 36px 32px;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover .service-card-content { transform: translateY(-12px); }
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #f5f5f5;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .service-short {
+    font-size: 12px;
+    color: rgba(245,245,245,0.75);
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s 0.1s ease;
+  }
+  .service-card:hover .service-short { opacity: 1; transform: translateY(0); }
+  .service-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-top: 16px;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.4s 0.2s ease;
+  }
+  .service-card:hover .service-cta { opacity: 1; }
+
+  /* GALLERY */
+  .gallery-section {
+    padding: 120px 60px;
+    background: var(--gallery-bg);
+    transition: background 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .gallery-section::before {
+    bottom: 4%;
+    right: -10%;
+  }
+  .gallery-header { margin-bottom: 60px; }
+  .gallery-masonry {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 220px);
+    gap: 6px;
+  }
+  .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item::before {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(212,175,55,0.18);
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery-item:nth-child(4) { grid-column: span 2; }
+  .gallery-item:nth-child(7) { grid-column: span 2; grid-row: span 1; }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: var(--gallery-img-filter);
+  }
+  .gallery-item:hover img { transform: scale(1.06); filter: var(--gallery-img-hover); }
+  .gallery-item:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .gallery-item-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px;
+    background: var(--gallery-label-gradient);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .gallery-item:hover .gallery-item-label { opacity: 1; }
+  .gallery-item-label span {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    transition: background 0.4s;
+  }
+  .testimonials::after {
+    bottom: -18%;
+    left: -10%;
+  }
+  .testimonials::before {
+    content: '"';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 400px;
+    color: var(--gold);
+    opacity: var(--testimonial-quote-opacity);
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .testimonials-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonials-viewport {
+    overflow: hidden;
+    position: relative;
+  }
+  .testimonials-track {
+    display: flex;
+    gap: 24px;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .testimonial-card {
+    background: var(--testimonial-card-bg);
+    border: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+    transition: all 0.3s;
+    overflow: hidden;
+    flex: 0 0 calc(50% - 12px);
+    min-width: 0;
+  }
+  .testimonial-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,175,55,0.08), transparent 45%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .testimonial-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .testimonial-card:hover::after { opacity: 1; }
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: var(--gold);
+    line-height: 0.8;
+    display: block;
+    margin-bottom: 24px;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 32px;
+    transition: color 0.4s;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 16px; }
+  .author-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text);
+    display: block;
+    margin-bottom: 4px;
+    transition: color 0.4s;
+  }
+  .author-event { font-size: 11px; color: var(--gold); }
+  .testimonials-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .testimonials-arrows {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .testimonial-arrow {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.24);
+    background: rgba(255,255,255,0.03);
+    color: var(--text);
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  }
+  .testimonial-arrow:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(212,175,55,0.08);
+  }
+  .testimonial-arrow:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+  }
+  .testimonials-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+  }
+  .testimonial-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(212,175,55,0.32);
+    background: transparent;
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  }
+  .testimonial-dot.active {
+    width: 34px;
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .testimonials-meta {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* CTA BAND */
+  .cta-band {
+    padding: 100px 60px;
+    background: transparent;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    transition: background 0.4s, border-color 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(5,5,5,0.78), rgba(5,5,5,0.68)),
+      radial-gradient(ellipse 70% 80% at 50% 50%, rgba(212,175,55,0.14) 0%, transparent 68%),
+      linear-gradient(90deg, rgba(5,5,5,0.2), rgba(5,5,5,0.05), rgba(5,5,5,0.2));
+    pointer-events: none;
+    z-index: 1;
+  }
+  .cta-band::after {
+    content: '';
+    position: absolute;
+    inset: -12%;
+    background: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1800&q=80&fit=crop') center/cover no-repeat;
+    transform: translate3d(0, var(--cta-parallax-y, 0px), 0) scale(1.08);
+    transform-origin: center;
+    transition: transform 0.12s linear;
+    will-change: transform;
+    z-index: 0;
+  }
+  .cta-band .reveal {
+    position: relative;
+    z-index: 2;
+  }
+  .cta-band h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 88px);
+    font-weight: 300;
+    color: var(--image-text);
+    margin-bottom: 20px;
+    line-height: 1.1;
+    transition: color 0.4s;
+  }
+  .cta-band h2 em { color: var(--gold); font-style: italic; }
+  .cta-band p {
+    font-size: 14px;
+    color: var(--image-text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 48px;
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+    transition: color 0.4s;
+  }
+  .cta-band .btn-secondary {
+    color: var(--image-text);
+    border-color: var(--image-border);
+    background: rgba(255,255,255,0.04);
+  }
+  .cta-band .btn-secondary:hover {
+    color: var(--image-text);
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.12);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--footer-bg);
+    padding: 80px 60px 40px;
+    border-top: 1px solid var(--border);
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.4s;
+  }
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--text-dim);
+    margin-top: 24px;
+    max-width: 280px;
+    transition: color 0.4s;
+  }
+  .footer-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-bottom p { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; transition: color 0.4s; }
+  .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* LOGO INLINE */
+  .inline-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark { display: flex; flex-direction: column; gap: 5px; }
+  .logo-bar { height: 3px; background: var(--gold); position: relative; }
+  .logo-bar::after {
+    content: '';
+    position: absolute;
+    right: -6px; top: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 6px solid var(--gold);
+  }
+  .logo-bar.white { background: var(--logo-bar-accent); }
+  .logo-bar.white::after { border-left-color: var(--logo-bar-accent); }
+  .logo-text-wrap { display: flex; flex-direction: column; }
+  .logo-epiko {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    letter-spacing: 5px;
+    color: var(--text);
+    line-height: 1;
+    transition: color 0.4s;
+  }
+  .logo-mty {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  /* FLOATING CONTACT BTN */
+  .float-wa {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    width: 58px; height: 58px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 900;
+    box-shadow: 0 0 30px rgba(37,211,102,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+  }
+  .float-wa:hover { transform: scale(1.1); box-shadow: 0 0 50px rgba(37,211,102,0.6); }
+  .float-wa svg { width: 28px; height: 28px; fill: white; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 40px; }
+    nav.scrolled { padding: 14px 40px; }
+    .about { padding: 80px 40px; }
+    .about-grid { gap: 50px; }
+    .identity-section { padding: 10px 40px 80px; }
+    .identity-shell { padding: 36px; }
+    .identity-header { grid-template-columns: 1fr; }
+    .identity-badge { justify-self: start; }
+    .identity-values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats { padding: 40px 40px 28px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+    .services-preview { padding: 80px 40px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-section { padding: 80px 40px; }
+    .gallery-masonry { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4),
+    .gallery-item:nth-child(7) { grid-column: span 1; grid-row: span 1; }
+    .gallery-item { height: 260px; }
+    .testimonials { padding: 80px 40px; }
+    .testimonials-shell { max-width: 640px; }
+    .cta-band { padding: 80px 40px; }
+    footer { padding: 60px 40px 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .theme-toggle { top: auto; bottom: 100px; transform: none; }
+  }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+    .hero {
+      align-items: flex-end;
+      padding: 110px 16px 88px;
+    }
+    .hero-content {
+      gap: 18px;
+      padding: 28px 18px;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+    .hero-title {
+      font-size: clamp(48px, 14vw, 76px);
+      line-height: 0.94;
+    }
+    .hero-subtitle {
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+    .hero-tags { gap: 10px; }
+    .hero-tag {
+      font-size: 9px;
+      letter-spacing: 1.8px;
+      padding: 9px 12px;
+    }
+    .hero-buttons {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .btn-primary, .btn-secondary { padding: 16px 28px; width: 100%; max-width: none; text-align: center; }
+    .hero-scroll { bottom: 18px; }
+    .hero-scroll span { letter-spacing: 3px; }
+    .about { padding: 60px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-text { padding-left: 0; }
+    .about-image { height: 320px; }
+    .identity-section { padding: 0 24px 60px; }
+    .identity-shell { padding: 28px 20px; }
+    .identity-top-grid,
+    .identity-values-grid { grid-template-columns: 1fr; }
+    .identity-card,
+    .value-card { min-height: auto; }
+    .stats { padding: 36px 24px 24px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 12px 0; }
+    .stat-number { font-size: 52px; }
+    .services-preview { padding: 60px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 3px; }
+    .service-card { aspect-ratio: 3/2; }
+    .service-short { opacity: 1; transform: translateY(0); }
+    .service-cta { opacity: 1; }
+    .gallery-section { padding: 60px 24px; }
+    .gallery-masonry {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: none;
+    }
+    .gallery-item { height: 180px; }
+    .gallery-item-label { opacity: 1; }
+    .testimonials { padding: 60px 24px; }
+    .testimonials::before { font-size: 200px; }
+    .testimonial-card {
+      flex-basis: 100%;
+      padding: 32px 24px;
+    }
+    .testimonials-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+    }
+    .testimonials-arrows {
+      justify-content: center;
+      order: 2;
+    }
+    .testimonials-meta {
+      text-align: center;
+      white-space: normal;
+    }
+    .testimonial-text { font-size: 17px; }
+    .cta-band { padding: 60px 24px; }
+    footer { padding: 50px 24px 28px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .theme-toggle {
+      top: auto;
+      bottom: 110px;
+      right: 0;
+      transform: none;
+      border-radius: 10px 0 0 10px;
+      padding: 8px 8px;
+    }
+    .toggle-label { display: none; }
+    .float-wa { width: 50px; height: 50px; bottom: 24px; right: 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { min-height: auto; }
+    .hero-title { font-size: clamp(42px, 15vw, 64px); }
+    .hero-subtitle { font-size: 13px; }
+    .hero-tags { gap: 8px; }
+    .hero-tag {
+      width: calc(50% - 4px);
+      text-align: center;
+      letter-spacing: 1.4px;
+      padding: 8px 10px;
+    }
+    .hero-scroll { display: none; }
+    .section-title { font-size: clamp(34px, 8vw, 52px); }
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat-item {
+      padding: 18px 10px 14px;
+    }
+    .stat-item:nth-child(2n)::before { display: none; }
+    .gallery-masonry { grid-template-columns: 1fr; }
+    .gallery-item { height: 220px; }
+    .gallery-item:nth-child(1) { height: 260px; }
+    .testimonials-dots { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="preloader" aria-hidden="true">
+  <div class="preloader-brand">
+    <div class="preloader-logo-mark">
+      <div class="preloader-logo-bar" style="width:32px"></div>
+      <div class="preloader-logo-bar white" style="width:32px"></div>
+      <div class="preloader-logo-bar" style="width:32px"></div>
+    </div>
+    <div class="preloader-logo-text">
+      <strong>EPIKO</strong>
+      <span>Monterrey</span>
+    </div>
+  </div>
+  <div class="preloader-track"><div class="preloader-fill"></div></div>
+  <div class="preloader-caption">Cargando experiencia</div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle" id="themeToggle" title="Cambiar tema" role="button" aria-label="Cambiar entre tema claro y oscuro" tabindex="0">
+  <div class="toggle-label">Tema</div>
+  <div class="theme-toggle-track">
+    <div class="theme-toggle-thumb" id="toggleThumb">
+      <span id="toggleIcon">&#9790;</span>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/521XXXXXXXXXX" class="float-wa" target="_blank" title="Cont&aacute;ctanos por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo inline-logo">
+    <div class="logo-mark">
+      <div class="logo-bar" style="width:28px"></div>
+      <div class="logo-bar white" style="width:28px"></div>
+      <div class="logo-bar" style="width:28px"></div>
+    </div>
+    <div class="logo-text-wrap">
+      <span class="logo-epiko">EPIKO</span>
+      <span class="logo-mty">MONTERREY</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="#galeria">Galer&iacute;a</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="contacto.html" class="nav-cta">Cotizar</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Abrir men&uacute;">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Inicio</a>
+  <a href="servicios.html" onclick="closeMobileNav()">Servicios</a>
+  <a href="#galeria" onclick="closeMobileNav()">Galer&iacute;a</a>
+  <a href="#nosotros" onclick="closeMobileNav()">Nosotros</a>
+  <a href="contacto.html" onclick="closeMobileNav()">Contacto</a>
+  <a href="contacto.html" class="nav-cta" onclick="closeMobileNav()">Cotizar</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80&fit=crop" aria-hidden="true">
+    <source src="https://videos.pexels.com/video-files/29779726/12796343_2560_1440_60fps.mp4" type="video/mp4">
+  </video>
+  <div class="hero-glow"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Renta de mobiliario para eventos en Monterrey</p>
+    <h1 class="hero-title">
+      <span class="hero-title-line">Cada evento</span>
+      <span class="hero-title-accent">merece ser &eacute;pico</span>
+    </h1>
+    <p class="hero-subtitle">Creamos montajes con presencia, calidez y detalle para bodas, fiestas y eventos corporativos que necesitan verse tan bien como se sienten.</p>
+    <div class="hero-tags" aria-label="Categor&iacute;as principales">
+      <span class="hero-tag">Toldos</span>
+      <span class="hero-tag">Mesas</span>
+      <span class="hero-tag">Sillas</span>
+      <span class="hero-tag">Inflables</span>
+      <span class="hero-tag">Portacoolers</span>
+      <span class="hero-tag">Banquetes</span>
+    </div>
+    <div class="hero-buttons">
+      <a href="servicios.html" class="btn-primary"><span>Ver Servicios</span></a>
+      <a href="#nosotros" class="btn-secondary">Conoce Epiko</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Descubrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats reveal">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number" data-count="500" data-suffix="+">0</span>
+      <p class="stat-label">Eventos realizados</p>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-count="6">0</span>
+      <p class="stat-label">Servicios exclusivos</p>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-count="100" data-suffix="%">0</span>
+      <p class="stat-label">% Satisfacci&oacute;n</p>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" data-count="7" data-suffix="/7">0</span>
+      <p class="stat-label">D&iacute;as disponibles</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / NOSOTROS -->
+<section class="about" id="nosotros">
+  <div class="about-grid">
+    <div class="about-image-wrap reveal">
+      <img class="about-image" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80&fit=crop" alt="Evento Epiko Monterrey"/>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">Qui&eacute;nes somos</p>
+      <h2 class="section-title" style="text-align:left; font-size:clamp(36px,3.5vw,56px)">Una empresa <em>regiomontana</em> con pasi&oacute;n</h2>
+      <p>En Epiko Monterrey damos vida a eventos con mobiliario, equipo y montajes que combinan estilo, orden y calidez. Somos una empresa local que cuida cada detalle para que tu celebraci&oacute;n se vea impecable y se disfrute sin complicaciones.</p>
+      <p>Trabajamos con cercan&iacute;a, puntualidad y una selecci&oacute;n pensada para bodas, fiestas infantiles, primeras comuniones, eventos sociales y corporativos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="identity-section">
+  <div class="identity-shell reveal">
+    <div class="identity-header">
+      <div>
+        <p class="section-label">Esencia Epiko</p>
+        <h2 class="section-title">Misi&oacute;n, visi&oacute;n y valores con una imagen m&aacute;s <em>clara</em></h2>
+      </div>
+      <div>
+        <div class="identity-badge">Servicio con estilo regiomontano</div>
+        <p class="section-desc">Nuestra forma de trabajar mezcla atenci&oacute;n cercana, presentaci&oacute;n impecable y ejecuci&oacute;n confiable en cada montaje.</p>
+      </div>
+    </div>
+
+    <div class="identity-top-grid">
+      <article class="identity-card" data-mark="01">
+        <div class="identity-card-label">Misi&oacute;n</div>
+        <h3>Convertir ideas en eventos bien resueltos</h3>
+        <p>Brindar mobiliario y equipo para eventos con una ejecuci&oacute;n puntual, cuidada y funcional, para que cada montaje luzca impecable y cada cliente viva una experiencia sin complicaciones.</p>
+        <div class="identity-card-meta">Dise&ntilde;o, orden y servicio</div>
+      </article>
+      <article class="identity-card" data-mark="02">
+        <div class="identity-card-label">Visi&oacute;n</div>
+        <h3>Ser la opci&oacute;n que primero se recomienda</h3>
+        <p>Consolidarnos en Monterrey y su &aacute;rea metropolitana como una marca confiable, elegante y actual, reconocida por su calidad visual, innovaci&oacute;n constante y excelencia operativa.</p>
+        <div class="identity-card-meta">Confianza que se nota</div>
+      </article>
+    </div>
+
+    <div class="identity-values-grid">
+      <article class="value-card">
+        <div class="value-card-icon">&#x29D6;</div>
+        <div class="value-card-name">Puntualidad</div>
+        <div class="value-card-desc">Respetamos tus tiempos y cuidamos que cada entrega llegue lista para que tu evento arranque sin presi&oacute;n.</div>
+      </article>
+      <article class="value-card">
+        <div class="value-card-icon">&#9672;</div>
+        <div class="value-card-name">Calidad</div>
+        <div class="value-card-desc">Seleccionamos equipo en excelentes condiciones para que cada montaje luzca est&eacute;tico, limpio y funcional.</div>
+      </article>
+      <article class="value-card">
+        <div class="value-card-icon">&#9673;</div>
+        <div class="value-card-name">Confianza</div>
+        <div class="value-card-desc">Trabajamos con claridad en cada trato y con el compromiso de responder como tu evento lo necesita.</div>
+      </article>
+      <article class="value-card">
+        <div class="value-card-icon">&#10022;</div>
+        <div class="value-card-name">Innovaci&oacute;n</div>
+        <div class="value-card-desc">Actualizamos nuestro cat&aacute;logo y propuestas para ofrecer ambientes modernos, vers&aacute;tiles y memorables.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider reveal">
+  <div class="divider-line"></div>
+  <div class="divider-diamond"></div>
+  <div class="divider-line right"></div>
+</div>
+
+<!-- SERVICIOS PREVIEW -->
+<section class="services-preview">
+  <div class="services-header reveal">
+    <p class="section-label">Nuestros Servicios</p>
+    <h2 class="section-title">Todo lo que tu <em>evento necesita</em></h2>
+    <p class="section-desc">Desde el mobiliario m&aacute;s elegante hasta la diversi&oacute;n para los m&aacute;s peque&ntilde;os, somos tu soluci&oacute;n integral para eventos en Monterrey y su &aacute;rea metropolitana.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=900&q=80&fit=crop" alt="Mobiliario elegante para eventos"/>
+      <div class="service-card-overlay"></div>
+      <div class="service-card-content">
+        <span class="service-number">01 &mdash;</span>
+        <h3 class="service-name">Mobiliario para Eventos</h3>
+        <p class="service-short">Sillas Tiffany, Crossback, Phoenix y mesas en m&uacute;ltiples estilos. La elegancia que tu celebraci&oacute;n merece.</p>
+        <span class="service-cta">Ver m&aacute;s &rarr;</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1765947389722-2e96d8c0aad9?auto=format&fit=crop&fm=jpg&q=80&w=900" alt="Inflable para fiesta infantil"/>
+      <div class="service-card-overlay"></div>
+      <div class="service-card-content">
+        <span class="service-number">02 &mdash;</span>
+        <h3 class="service-name">Inflables &amp; Diversi&oacute;n</h3>
+        <p class="service-short">Castillos tem&aacute;ticos y juegos inflables sanitizados. La magia para los m&aacute;s peque&ntilde;os en cada pi&ntilde;ata o fiesta.</p>
+        <span class="service-cta">Ver m&aacute;s &rarr;</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="9452.jpg" alt="Toldo o carpa para evento"/>
+      <div class="service-card-overlay"></div>
+      <div class="service-card-content">
+        <span class="service-number">03 &mdash;</span>
+        <h3 class="service-name">Toldos & Carpas</h3>
+        <p class="service-short">Protege tu evento de cualquier clima. Instalaci&oacute;n segura y supervisada en cualquier espacio del AMM.</p>
+        <span class="service-cta">Ver m&aacute;s &rarr;</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="1810.jpg" alt="Banquete y catering para evento"/>
+      <div class="service-card-overlay"></div>
+      <div class="service-card-content">
+        <span class="service-number">04 &mdash;</span>
+        <h3 class="service-name">Banquetes & Catering</h3>
+        <p class="service-short">Desde taquizas y parrilladas hasta cenas formales de varios tiempos. Men&uacute;s personalizados de alta calidad.</p>
+        <span class="service-cta">Ver m&aacute;s &rarr;</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1769006708689-afe6f69b4f76?auto=format&fit=crop&fm=jpg&q=80&w=900" alt="Equipo de enfriamiento para eventos"/>
+      <div class="service-card-overlay"></div>
+      <div class="service-card-content">
+        <span class="service-number">05 &mdash;</span>
+        <h3 class="service-name">Portacoolers</h3>
+        <p class="service-short">Que el calor de Monterrey no arruine tu evento. Unidades de alta potencia para espacios abiertos y terrazas.</p>
+        <span class="service-cta">Ver m&aacute;s &rarr;</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="3597.jpg" alt="Mobiliario lounge para eventos"/>
+      <div class="service-card-overlay"></div>
+      <div class="service-card-content">
+        <span class="service-number">06 &mdash;</span>
+        <h3 class="service-name">Mobiliario Lounge</h3>
+        <p class="service-short">Salas lounge modernas, periqueras y mobiliario auxiliar para crear ambientes &uacute;nicos y relajados.</p>
+        <span class="service-cta">Ver m&aacute;s &rarr;</span>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:60px;" class="reveal">
+    <a href="servicios.html" class="btn-primary"><span>Ver todos los servicios</span></a>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="galeria">
+  <div class="gallery-header reveal">
+    <p class="section-label">Galer&iacute;a de trabajos</p>
+    <h2 class="section-title">Momentos que <em>hemos creado</em></h2>
+    <p class="section-desc">Cada imagen cuenta una historia. Estos son algunos de los eventos que hemos tenido el honor de acompa&ntilde;ar.</p>
+  </div>
+  <div class="gallery-masonry reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900&q=80&fit=crop" alt="Boda"/>
+      <div class="gallery-item-label"><span>Boda Elegante</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80&fit=crop" alt="Fiesta"/>
+      <div class="gallery-item-label"><span>Fiesta Infantil</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="16740.jpg" alt="Quince"/>
+      <div class="gallery-item-label"><span>XV A&ntilde;os</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="1810.jpg" alt="Banquete"/>
+      <div class="gallery-item-label"><span>Banquete Premium</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="9452.jpg" alt="Toldo"/>
+      <div class="gallery-item-label"><span>Toldo & Carpa</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="2149377997.jpg" alt="Comunion"/>
+      <div class="gallery-item-label"><span>Primera Comuni&oacute;n</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=900&q=80&fit=crop" alt="Evento corporativo"/>
+      <div class="gallery-item-label"><span>Evento Corporativo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="reveal">
+    <p class="section-label">Testimonios</p>
+    <h2 class="section-title">Lo que dicen <em>nuestros clientes</em></h2>
+  </div>
+  <div class="testimonials-shell reveal">
+    <div class="testimonials-viewport">
+      <div class="testimonials-track" id="testimonialsTrack">
+    <div class="testimonial-card">
+      <p class="testimonial-text">Excelente servicio, los muebles llegaron impecables y justo a tiempo. Hicieron que mi boda luciera incre&iacute;ble.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <span class="author-name">Mariana T.</span>
+          <span class="author-event">Boda &middot; Monterrey</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">S&uacute;per recomendados para pi&ntilde;atas. El equipo es muy seguro y el trato muy amable.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <span class="author-name">Roberto G.</span>
+          <span class="author-event">Fiesta Infantil &middot; San Pedro</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">Los portacoolers fueron un salvavidas en el evento de verano. Todos mis invitados estuvieron c&oacute;modos a pesar del calor de Monterrey.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <span class="author-name">Alejandra V.</span>
+          <span class="author-event">XV A&ntilde;os &middot; Guadalupe</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">Hemos tenido el honor de acompa&ntilde;ar a cientos de familias regiomontanas en sus momentos m&aacute;s especiales.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">E</div>
+        <div>
+          <span class="author-name">Equipo Epiko</span>
+          <span class="author-event">Monterrey &middot; NL</span>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+    <div class="testimonials-controls">
+      <div class="testimonials-arrows">
+        <button class="testimonial-arrow" id="testimonialPrev" type="button" aria-label="Testimonio anterior">&lt;</button>
+        <button class="testimonial-arrow" id="testimonialNext" type="button" aria-label="Testimonio siguiente">&gt;</button>
+      </div>
+      <div class="testimonials-dots" id="testimonialsDots" aria-label="Indicadores del carrusel"></div>
+      <div class="testimonials-meta" id="testimonialsMeta">01 / 02</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band" id="contacto">
+  <div class="reveal">
+    <h2>&iquest;Listo para tu <em>pr&oacute;ximo evento?</em></h2>
+    <p>Escr&iacute;benos y cotiza sin compromiso</p>
+    <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:ventas@epikomty.com" class="btn-primary"><span>ventas@epikomty.com</span></a>
+      <a href="servicios.html" class="btn-secondary">Ver Servicios</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="inline-logo">
+        <div class="logo-mark">
+          <div class="logo-bar" style="width:28px"></div>
+          <div class="logo-bar white" style="width:28px"></div>
+          <div class="logo-bar" style="width:28px"></div>
+        </div>
+        <div class="logo-text-wrap">
+          <span class="logo-epiko">EPIKO</span>
+          <span class="logo-mty">MONTERREY</span>
+        </div>
+      </div>
+      <p>Empresa orgullosamente regiomontana especializada en renta de mobiliario y equipo para eventos de todo tipo en Monterrey y su &aacute;rea metropolitana.</p>
+    </div>
+    <div class="footer-col">
+      <h4>P&aacute;ginas</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="#galeria">Galer&iacute;a</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="servicios.html">Mobiliario</a></li>
+        <li><a href="servicios.html">Inflables</a></li>
+        <li><a href="servicios.html">Portacoolers</a></li>
+        <li><a href="servicios.html">Banquetes</a></li>
+        <li><a href="servicios.html">Toldos</a></li>
+        <li><a href="servicios.html">Lounge</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="mailto:ventas@epikomty.com">ventas@epikomty.com</a></li>
+        <li><a href="#">Monterrey, N.L.</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Epiko Monterrey. Todos los derechos reservados.</p>
+    <p>Desarrollado por <a href="https://partumdesign.com.mx" target="_blank" rel="noopener noreferrer">Partum Design</a></p>
+  </div>
+</footer>
+
+<script>
+const preloaderStart = performance.now();
+
+// ===== THEME TOGGLE =====
+const html = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const toggleIcon = document.getElementById('toggleIcon');
+
+// Load saved preference
+const savedTheme = localStorage.getItem('epiko-theme') || 'dark';
+html.setAttribute('data-theme', savedTheme);
+toggleIcon.textContent = savedTheme === 'dark' ? '\u263D' : '\u2600';
+
+toggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  toggleIcon.textContent = next === 'dark' ? '\u263D' : '\u2600';
+  localStorage.setItem('epiko-theme', next);
+});
+toggle.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
+});
+
+// ===== CURSOR =====
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+if (cursor && ring) {
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .service-card, .gallery-item, .identity-card, .value-card, .theme-toggle').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.5)'; ring.style.transform = 'scale(1.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+  });
+}
+
+// ===== HAMBURGER MENU =====
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  const isOpen = hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===== PARTICLES =====
+const pContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `left:${Math.random()*100}%;width:${Math.random()*3+1}px;height:${Math.random()*3+1}px;animation-duration:${Math.random()*15+10}s;animation-delay:${Math.random()*10}s;`;
+  pContainer.appendChild(p);
+}
+
+// ===== NAV SCROLL =====
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ===== HERO PARALLAX =====
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const heroVideo = document.querySelector('.hero-video');
+if (heroVideo && !reduceMotion) {
+  let heroFrame = null;
+  const syncHeroVideo = () => {
+    const offset = Math.min(window.scrollY * 0.12, 36);
+    heroVideo.style.transform = `scale(1.04) translate3d(0, ${offset}px, 0)`;
+    heroFrame = null;
+  };
+  window.addEventListener('scroll', () => {
+    if (heroFrame) return;
+    heroFrame = requestAnimationFrame(syncHeroVideo);
+  }, { passive: true });
+}
+
+// ===== CTA PARALLAX =====
+const ctaBand = document.querySelector('.cta-band');
+if (ctaBand && !reduceMotion) {
+  let ctaFrame = null;
+
+  const syncCtaParallax = () => {
+    const rect = ctaBand.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const progress = (rect.top + rect.height * 0.5 - viewportHeight * 0.5) / viewportHeight;
+    const offset = Math.max(-36, Math.min(36, progress * -28));
+    ctaBand.style.setProperty('--cta-parallax-y', `${offset}px`);
+    ctaFrame = null;
+  };
+
+  ctaBand.style.setProperty('--cta-parallax-y', '0px');
+  syncCtaParallax();
+
+  window.addEventListener('scroll', () => {
+    if (ctaFrame) return;
+    ctaFrame = requestAnimationFrame(syncCtaParallax);
+  }, { passive: true });
+
+  window.addEventListener('resize', syncCtaParallax);
+}
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.style.setProperty('--reveal-delay', `${Math.min(index * 45, 220)}ms`);
+  observer.observe(el);
+});
+
+// ===== COUNT UP =====
+const countEls = document.querySelectorAll('[data-count]');
+const runCountUp = (el) => {
+  if (!el || el.dataset.countStarted === 'true') return;
+
+  el.dataset.countStarted = 'true';
+  el.classList.add('is-counting');
+
+  const target = Number(el.dataset.count || 0);
+  const suffix = el.dataset.suffix || '';
+  const statCard = el.closest('.stat-item');
+  const duration = 2200;
+  let start = null;
+
+  const formatValue = (value) => {
+    const rounded = Math.floor(value);
+    return `${new Intl.NumberFormat('es-MX').format(rounded)}${suffix}`;
+  };
+
+  const step = (timestamp) => {
+    if (start === null) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    el.textContent = formatValue(eased * target);
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.textContent = formatValue(target);
+      el.classList.remove('is-counting');
+      if (statCard) statCard.classList.add('counted');
+    }
+  };
+
+  requestAnimationFrame(step);
+};
+
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    if (entry.target.classList.contains('stats')) {
+      countEls.forEach(runCountUp);
+    } else {
+      runCountUp(entry.target);
+    }
+
+    countObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+
+const statsSection = document.querySelector('.stats');
+if (statsSection) countObserver.observe(statsSection);
+countEls.forEach(el => countObserver.observe(el));
+
+// ===== TESTIMONIALS CAROUSEL =====
+const testimonialsTrack = document.getElementById('testimonialsTrack');
+const testimonialPrev = document.getElementById('testimonialPrev');
+const testimonialNext = document.getElementById('testimonialNext');
+const testimonialsDots = document.getElementById('testimonialsDots');
+const testimonialsMeta = document.getElementById('testimonialsMeta');
+
+if (testimonialsTrack && testimonialPrev && testimonialNext && testimonialsDots && testimonialsMeta) {
+  const testimonialCards = Array.from(testimonialsTrack.children);
+  let testimonialIndex = 0;
+  let testimonialPages = 1;
+  let testimonialAutoplay = null;
+
+  testimonialPrev.textContent = '<';
+  testimonialNext.textContent = '>';
+
+  const getSlidesPerView = () => window.innerWidth <= 768 ? 1 : 2;
+
+  const buildDots = () => {
+    testimonialsDots.innerHTML = '';
+    for (let i = 0; i < testimonialPages; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'testimonial-dot';
+      dot.setAttribute('aria-label', `Ir al testimonio ${i + 1}`);
+      dot.addEventListener('click', () => {
+        testimonialIndex = i;
+        updateTestimonials();
+        restartTestimonialsAutoplay();
+      });
+      testimonialsDots.appendChild(dot);
+    }
+  };
+
+  const updateTestimonials = () => {
+    const slidesPerView = getSlidesPerView();
+    testimonialPages = Math.max(1, Math.ceil(testimonialCards.length / slidesPerView));
+    testimonialIndex = Math.max(0, Math.min(testimonialIndex, testimonialPages - 1));
+
+    const firstCard = testimonialCards[0];
+    const cardGap = parseFloat(getComputedStyle(testimonialsTrack).gap) || 0;
+    const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 0;
+    const offset = testimonialIndex * (cardWidth + cardGap) * slidesPerView;
+    testimonialsTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
+
+    if (testimonialsDots.children.length !== testimonialPages) buildDots();
+    Array.from(testimonialsDots.children).forEach((dot, index) => {
+      dot.classList.toggle('active', index === testimonialIndex);
+    });
+
+    testimonialPrev.disabled = testimonialPages <= 1;
+    testimonialNext.disabled = testimonialPages <= 1;
+    testimonialsMeta.textContent = `${String(testimonialIndex + 1).padStart(2, '0')} / ${String(testimonialPages).padStart(2, '0')}`;
+  };
+
+  const goToNextTestimonials = () => {
+    testimonialIndex = (testimonialIndex + 1) % testimonialPages;
+    updateTestimonials();
+  };
+
+  const goToPrevTestimonials = () => {
+    testimonialIndex = (testimonialIndex - 1 + testimonialPages) % testimonialPages;
+    updateTestimonials();
+  };
+
+  const startTestimonialsAutoplay = () => {
+    if (reduceMotion || testimonialPages <= 1) return;
+    testimonialAutoplay = window.setInterval(goToNextTestimonials, 5000);
+  };
+
+  const stopTestimonialsAutoplay = () => {
+    if (testimonialAutoplay) {
+      window.clearInterval(testimonialAutoplay);
+      testimonialAutoplay = null;
+    }
+  };
+
+  const restartTestimonialsAutoplay = () => {
+    stopTestimonialsAutoplay();
+    startTestimonialsAutoplay();
+  };
+
+  testimonialPrev.addEventListener('click', () => {
+    goToPrevTestimonials();
+    restartTestimonialsAutoplay();
+  });
+
+  testimonialNext.addEventListener('click', () => {
+    goToNextTestimonials();
+    restartTestimonialsAutoplay();
+  });
+
+  testimonialsTrack.addEventListener('mouseenter', stopTestimonialsAutoplay);
+  testimonialsTrack.addEventListener('mouseleave', startTestimonialsAutoplay);
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      updateTestimonials();
+      restartTestimonialsAutoplay();
+    }, 120);
+  });
+
+  buildDots();
+  updateTestimonials();
+  startTestimonialsAutoplay();
+}
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const elapsed = performance.now() - preloaderStart;
+  const delay = Math.max(0, 1450 - elapsed);
+  setTimeout(() => {
+    preloader.classList.add('out');
+  }, delay);
+});
+</script>
+</body>
+</html>
+
